@@ -1,35 +1,36 @@
 {
-  "engines":{
-    "node": "22.14.0"
-  },
-  "name": "major_project",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "build:css": "tailwindcss -i ./tailwind.css -o ./public/tailwind.css",
-    "watch:css": "tailwindcss -i ./tailwind.css -o ./public/tailwind.css --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "@imagekit/nodejs": "^7.3.0",
-    "bcrypt": "^6.0.0",
-    "dotenv": "^17.2.4",
-    "ejs": "^3.1.10",
-    "ejs-mate": "^4.0.0",
-    "express": "^5.1.0",
-    "express-session": "^1.19.0",
-    "method-override": "^3.0.0",
-    "mongoose": "^8.16.4",
-    "multer": "^2.0.2"
-  },
-  "devDependencies": {
-    "@tailwindcss/cli": "^4.1.18",
-    "autoprefixer": "^10.4.24",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.18"
-  }
+    "engines": {
+        "node": "22.14.0"
+    },
+    "name": "major_project",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "start": "node app.js",
+        "build:css": "tailwindcss -i ./tailwind.css -o ./public/tailwind.css",
+        "watch:css": "tailwindcss -i ./tailwind.css -o ./public/tailwind.css --watch",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "@imagekit/nodejs": "^7.3.0",
+        "bcrypt": "^6.0.0",
+        "dotenv": "^17.2.4",
+        "ejs": "^3.1.10",
+        "ejs-mate": "^4.0.0",
+        "express": "^5.1.0",
+        "express-session": "^1.19.0",
+        "method-override": "^3.0.0",
+        "mongoose": "^8.16.4",
+        "multer": "^2.0.2"
+    },
+    "devDependencies": {
+        "@tailwindcss/cli": "^4.1.18",
+        "autoprefixer": "^10.4.24",
+        "postcss": "^8.5.6",
+        "tailwindcss": "^4.1.18"
+    }
 }
