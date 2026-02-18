@@ -1,0 +1,155 @@
+<% layout("/layouts/boilerplate.ejs") -%>
+
+    <div class="mx-auto mt-10 mb-12 w-full max-w-3xl px-4">
+        <div class="rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <div class="p-6 md:p-8">
+
+                <h2 class="mb-6 text-center text-xl font-semibold tracking-wide text-slate-900">
+                    Edit Product
+                </h2>
+
+                <form action="/listings/<%= listing._id %>?_method=PUT" enctype="multipart/form-data" method="post" class="space-y-5">
+
+                    <!-- Title -->
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-slate-700">Title</label>
+                        <input type="text" name="listing[title]" value="<%= listing.title %>" required
+                            class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
+                    </div>
+
+                    <!-- Description -->
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-slate-700">Description</label>
+                        <textarea name="listing[description]" rows="3"
+                            class="w-full resize-none rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900"><%= listing.description %></textarea>
+                    </div>
+
+                    <!-- Image -->
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-slate-700">Upload Image</label>
+                        <input type="file" name="image" accept="image/*" required
+                            class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
+                    </div>
+
+                    <!-- Price & Location -->
+                    <div class="grid gap-5 md:grid-cols-2">
+                        <div>
+                            <label class="mb-1 block text-sm font-medium text-slate-700">Price Per Day (₹)</label>
+                            <input type="number" name="listing[pricePerDay]" value="<%= listing.pricePerDay %>" required
+                                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
+                        </div>
+
+                        <div>
+                            <label class="mb-1 block text-sm font-medium text-slate-700">Location</label>
+                            <input type="text" name="listing[location]" value="<%= listing.location %>" required
+                                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
+                        </div>
+                    </div>
+
+                    <!-- Brand & Color (Schema-added) -->
+                    <div class="grid gap-5 md:grid-cols-2">
+                        <div>
+                            <label class="mb-1 block text-sm font-medium text-slate-700">Brand</label>
+                            <input type="text" name="listing[brand]" value="<%= listing.brand || '' %>"
+                                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
+                        </div>
+
+                        <div>
+                            <label class="mb-1 block text-sm font-medium text-slate-700">Color</label>
+                            <input type="text" name="listing[color]" value="<%= listing.color || '' %>"
+                                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
+                        </div>
+                    </div>
+
+                    <!-- Category & Occasion -->
+                    <div class="grid gap-5 md:grid-cols-2">
+                        <div>
+                            <label class="mb-1 block text-sm font-medium text-slate-700">Category</label>
+                            <select name="listing[category]" required
+                                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900">
+                                <% ["Lehenga","Kurta Pajama","Sherwani","Anarkali","Suit","Bandhgala"].forEach(cat=> {
+                                    %>
+                                    <option value="<%= cat %>" <%=listing.category===cat ? "selected" : "" %>>
+                                        <%= cat %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="mb-1 block text-sm font-medium text-slate-700">Occasion</label>
+                            <select name="listing[occasion]" required
+                                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900">
+                                <% ["Wedding","Reception","Festive","Corporate","Formal"].forEach(occ=> { %>
+                                    <option value="<%= occ %>" <%=listing.occasion===occ ? "selected" : "" %>>
+                                        <%= occ %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Sizes -->
+                    <div>
+                        <label class="mb-2 block text-sm font-medium text-slate-700">Available Sizes</label>
+                        <div class="flex flex-wrap gap-4">
+                            <% ["S","M","L","XL"].forEach(s=> { %>
+                                <label class="inline-flex items-center gap-2 text-sm text-slate-700">
+                                    <input type="checkbox" name="listing[size]" value="<%= s %>"
+                                        <%=listing.size.includes(s) ? "checked" : "" %>
+                                    class="rounded border-slate-300 text-slate-900 focus:ring-0"
+                                    />
+                                    <%= s %>
+                                </label>
+                                <% }) %>
+                        </div>
+                    </div>
+
+                    <!-- Fit Type & Rental Status -->
+                    <div class="grid gap-5 md:grid-cols-2">
+                        <div>
+                            <label class="mb-1 block text-sm font-medium text-slate-700">Fit Type</label>
+                            <select name="listing[fitType]"
+                                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900">
+                                <% ["Slim","Regular","Relaxed"].forEach(fit=> { %>
+                                    <option value="<%= fit %>" <%=listing.fitType===fit ? "selected" : "" %>>
+                                        <%= fit %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="mb-1 block text-sm font-medium text-slate-700">Rental Status</label>
+                            <select name="listing[rentalStatus]"
+                                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900">
+                                <% ["available","reserved","rented"].forEach(status=> { %>
+                                    <option value="<%= status %>" <%=listing.rentalStatus===status ? "selected" : "" %>>
+                                        <%= status %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Rating -->
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-slate-700">Rating</label>
+                        <input type="number" step="0.1" min="0" max="5" name="listing[rating]"
+                            value="<%= listing.rating %>"
+                            class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="pt-4">
+                        <button type="submit"
+                            class="w-full rounded-md! bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-950">
+                            Update Product
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>

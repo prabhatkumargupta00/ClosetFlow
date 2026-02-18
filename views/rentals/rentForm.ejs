@@ -1,0 +1,24 @@
+<% layout("/layouts/boilerplate.ejs") -%>
+
+<div class="flex justify-center mt-10">
+    <div class="w-full max-w-md shadow-xl rounded-lg p-8">
+        <h3 class="text-2xl font-semibold text-gray-800">Rent: <%= listing.title %></h3>
+        <p class="text-lg text-gray-600 mt-2">Price per day: ₹<%= listing.pricePerDay %></p>
+
+        <form action="/rentals/<%= listing._id %>/rent" method="POST" class="mt-6 space-y-6">
+            <div>
+                <label for="startDate" class="block ml-1 text-md font-medium text-gray-700">Start Date</label>
+                <input type="date" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" name="start" required>
+            </div>
+
+            <div>
+                <label for="endDate" class="block ml-1 text-md font-medium text-gray-700">End Date</label>
+                <input type="date" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" name="end" required>
+            </div>
+
+            <button type="submit" class="mt-1 text-white block bg-success w-full px-4 py-2 border border-gray-300 rounded-lg! shadow-md font-semibold " >
+    Confirm Rent
+</button>
+        </form>
+    </div>
+</div>

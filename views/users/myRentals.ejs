@@ -1,0 +1,29 @@
+<% layout("/layouts/boilerplate.ejs") -%>
+
+<div class="container mt-5">
+    <h3>My Rentals</h3>
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Listing</th>
+                <th>Period</th>
+                <th>Price (₹)</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% rentals.forEach(rental => { %>
+                <tr>
+                    <td><%= rental.listing.title %></td>
+                    <td><%= rental.rentalPeriod.start.toLocaleDateString() %> - <%= rental.rentalPeriod.end.toLocaleDateString() %></td>
+                    <td><%= rental.price.toLocaleString("en-IN") %></td>
+                    <td>
+                        <span class="badge <%= rental.status === 'completed' ? 'bg-success' : 'bg-primary' %>">
+                            <%= rental.status %>
+                        </span>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>

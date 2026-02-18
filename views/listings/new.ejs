@@ -1,0 +1,151 @@
+<% layout("/layouts/boilerplate.ejs") -%>
+
+  <div class="mx-auto mt-8 mb-4 w-full max-w-3xl px-4">
+    <div class="rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div class="p-6 md:p-8">
+
+        <h2 class="mb-6 text-center text-xl font-semibold text-slate-900">
+          Add New Listing
+        </h2>
+
+        <form action="/listings" method="POST" enctype="multipart/form-data" class="space-y-5">
+
+          <!-- Title -->
+          <div>
+            <label class="mb-1 block text-sm font-medium text-slate-700">Title</label>
+            <input type="text" name="listing[title]" placeholder="Enter product title" required
+              class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
+          </div>
+
+          <!-- Description -->
+          <div>
+            <label class="mb-1 block text-sm font-medium text-slate-700">Description</label>
+            <textarea name="listing[description]" rows="3" placeholder="Brief product description"
+              class="w-full resize-none rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900"></textarea>
+          </div>
+
+          <!-- Image -->
+          <div>
+            <label class="mb-1 block text-sm font-medium text-slate-700">Upload Image</label>
+            <input type="file" name="image" accept="image/*" required
+              class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
+          </div>
+
+
+          <!-- Price & Location -->
+          <div class="grid gap-5 md:grid-cols-2">
+            <div>
+              <label class="mb-1 block text-sm font-medium text-slate-700">Price Per Day (₹)</label>
+              <input type="number" name="listing[pricePerDay]" min="0" required
+                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
+            </div>
+
+            <div>
+              <label class="mb-1 block text-sm font-medium text-slate-700">Location</label>
+              <input type="text" name="listing[location]" placeholder="City / Area" required
+                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
+            </div>
+          </div>
+
+          <!-- Brand & Color (Schema-added) -->
+          <div class="grid gap-5 md:grid-cols-2">
+            <div>
+              <label class="mb-1 block text-sm font-medium text-slate-700">Brand</label>
+              <input type="text" name="listing[brand]" placeholder="Optional"
+                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
+            </div>
+
+            <div>
+              <label class="mb-1 block text-sm font-medium text-slate-700">Color</label>
+              <input type="text" name="listing[color]" placeholder="Optional"
+                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
+            </div>
+          </div>
+
+          <!-- Category & Occasion -->
+          <div class="grid gap-5 md:grid-cols-2">
+            <div>
+              <label class="mb-1 block text-sm font-medium text-slate-700">Category</label>
+              <select name="listing[category]" required
+                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900">
+                <option value="">Select category</option>
+                <option>Lehenga</option>
+                <option>Kurta Pajama</option>
+                <option>Sherwani</option>
+                <option>Anarkali</option>
+                <option>Suit</option>
+                <option>Bandhgala</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="mb-1 block text-sm font-medium text-slate-700">Occasion</label>
+              <select name="listing[occasion]" required
+                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900">
+                <option value="">Select occasion</option>
+                <option>Wedding</option>
+                <option>Reception</option>
+                <option>Festive</option>
+                <option>Corporate</option>
+                <option>Formal</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Sizes -->
+          <div>
+            <label class="mb-2 block text-sm font-medium text-slate-700">Available Sizes</label>
+            <div class="flex flex-wrap gap-4">
+              <% ["S","M","L","XL"].forEach(s=> { %>
+                <label class="inline-flex items-center gap-2 text-sm text-slate-700">
+                  <input type="checkbox" name="listing[size]" value="<%= s %>"
+                    class="rounded border-slate-300 text-slate-900 focus:ring-0" />
+                  <%= s %>
+                </label>
+                <% }) %>
+            </div>
+          </div>
+
+          <!-- Fit Type & Rental Status -->
+          <div class="grid gap-5 md:grid-cols-2">
+            <div>
+              <label class="mb-1 block text-sm font-medium text-slate-700">Fit Type</label>
+              <select name="listing[fitType]"
+                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900">
+                <option value="Regular" selected>Regular</option>
+                <option value="Slim">Slim</option>
+                <option value="Relaxed">Relaxed</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="mb-1 block text-sm font-medium text-slate-700">Rental Status</label>
+              <select name="listing[rentalStatus]"
+                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900">
+                <option value="available" selected>Available</option>
+                <option value="reserved">Reserved</option>
+                <option value="rented">Rented</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Rating -->
+          <div>
+            <label class="mb-1 block text-sm font-medium text-slate-700">Rating</label>
+            <input type="number" name="listing[rating]" min="0" max="5" step="0.1" placeholder="Optional"
+              class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
+          </div>
+
+          <!-- Submit -->
+          <div class="pt-4">
+            <button type="submit"
+              class="w-full rounded-md bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-950">
+              Add Listing
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>

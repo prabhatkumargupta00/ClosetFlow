@@ -1,0 +1,142 @@
+<% layout("/layouts/boilerplate.ejs") -%>
+
+    <!-- CARD -->
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-lg">
+
+      <!-- IMAGE BLOCK -->
+      <div class="mb-8 flex justify-center">
+        <div class="relative w-full max-w-md aspect-4/5 overflow-hidden rounded-2xl">
+          <img src="<%= listing.image %>" alt="Listing Image" class="h-full w-full object-cover object-top" />
+
+          <span
+            class="absolute left-4 top-4 rounded-full bg-black/80 px-4 py-1 text-xs font-semibold uppercase tracking-wide text-white backdrop-blur">
+            <%= listing.rentalStatus %>
+          </span>
+        </div>
+      </div>
+
+      <!-- DETAILS -->
+      <div class=" mx-3 md:mx-6">
+
+        <h1 class="text-2xl sm:text-3xl font-semibold leading-tight text-slate-900">
+          <%= listing.title %>
+        </h1>
+
+        <p class="text-base leading-relaxed text-slate-700">
+          <%= listing.description %>
+        </p>
+
+        <!-- META -->
+        <div class="flex flex-wrap gap-y-6 gap-x-12">
+
+          <div class="w-[45%]">
+            <p class="text-xs uppercase tracking-widest text-slate-500">Category</p>
+            <p class="mt-1 font-medium text-slate-900">
+              <%= listing.category %>
+            </p>
+          </div>
+
+          <div class="w-[45%]">
+            <p class="text-xs uppercase tracking-widest text-slate-500">Occasion</p>
+            <p class="mt-1 font-medium text-slate-900">
+              <%= listing.occasion %>
+            </p>
+          </div>
+
+          <div class="w-[45%]">
+            <p class="text-xs uppercase tracking-widest text-slate-500">Fit</p>
+            <p class="mt-1 font-medium text-slate-900">
+              <%= listing.fitType %>
+            </p>
+          </div>
+
+          <div class="w-[45%]">
+            <p class="text-xs uppercase tracking-widest text-slate-500">Sizes</p>
+            <p class="mt-1 font-medium text-slate-900">
+              <%= listing.size.join(", ") %></p>
+        </div>
+
+        <div class=" w-[45%]">
+                <p class="text-xs uppercase tracking-widest text-slate-500">Location</p>
+                <p class="mt-1 font-medium text-slate-900">
+                  <%= listing.location %>
+                </p>
+          </div>
+
+          <% if (listing.brand) { %>
+            <div class="w-[45%]">
+              <p class="text-xs uppercase tracking-widest text-slate-500">Brand</p>
+              <p class="mt-1 font-medium text-slate-900">
+                <%= listing.brand %>
+              </p>
+            </div>
+            <% } %>
+
+              <% if (listing.color) { %>
+                <div class="w-[45%]">
+                  <p class="text-xs uppercase tracking-widest text-slate-500">Color</p>
+                  <p class="mt-1 font-medium text-slate-900">
+                    <%= listing.color %>
+                  </p>
+                </div>
+                <% } %>
+
+        </div>
+
+        <!-- PRICE + RATING -->
+        <div class="flex items-center justify-between border-t border-slate-200 pt-6">
+
+          <div>
+            <p class="text-xs uppercase tracking-widest text-slate-500">Rental Price</p>
+            <p class="mt-1 text-xl font-semibold text-emerald-600">
+              ₹ <%= listing.pricePerDay.toLocaleString("en-IN") %>
+                <span class="text-sm text-slate-500">/ day</span>
+            </p>
+          </div>
+
+          <div class="text-right">
+            <p class="text-xs uppercase tracking-widest text-slate-500">Rating</p>
+            <p class="mt-1 font-medium text-amber-500">
+              ⭐ <%= listing.rating %> / 5
+            </p>
+          </div>
+
+        </div>
+
+        <!-- CTA -->
+        <!-- <div class="border-t border-slate-200 pt-8"> -->
+        <% if (currentUser) { %>
+          <form action="/rentals/<%= listing._id %>" method="get">
+            <button
+              class="w-full rounded-2xl! bg-linear-to-br from-emerald-500 to-emerald-800 px-4 py-3 text-base font-semibold text-white shadow-lg transition hover:from-emerald-700 hover:to-emerald-800">
+              Rent this outfit
+            </button>
+          </form>
+          <% } else { %>
+            <a href="/login"
+              class="block w-full rounded-2xl! border border-slate-300 bg-white px-4 py-3 text-center text-base font-semibold text-slate-800 shadow-sm transition hover:bg-slate-100">
+              Login to rent this outfit
+            </a>
+          <% } %>
+
+            <% if (currentUser && currentUserRole==="admin" ) { %>
+      <div class="mt-4 flex items-center gap-4">
+        <!-- Edit --> <a
+          href="/listings/<%= listing._id %>/edit"
+          class="inline-flex items-center justify-center rounded-lg bg-slate-900 px-6 py-2.5 text-sm font-medium text-white shadow transition hover:bg-slate-800">
+          Edit Listing </a> <!-- Delete -->
+        <form action="/listings/<%= listing._id %>?_method=DELETE" method="post"
+          onsubmit="return confirm('This action cannot be undone. Delete this listing?')"> <button
+            class="inline-flex items-center justify-center rounded-lg! bg-red-600 px-6 py-2.5 text-sm font-medium text-white shadow transition overflow-hidden hover:bg-red-700">
+            Delete Listing </button> </form>
+      </div>
+      <% } %>
+      </div>
+
+    </div>
+    <!-- ADMIN ACTIONS -->
+    
+
+
+
+      </div>

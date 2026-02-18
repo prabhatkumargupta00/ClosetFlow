@@ -1,0 +1,170 @@
+<% layout("/layouts/boilerplate.ejs") -%>
+
+<!-- Search Form (kept commented, Tailwind-ready if needed) -->
+<!--
+<form action="/listings" method="GET" class="mb-6 max-w-xl">
+  <div class="flex rounded-md border border-slate-300 overflow-hidden">
+    <input
+      type="text"
+      name="q"
+      placeholder="Search listings..."
+      value="<%= q || '' %>"
+      class="flex-1 px-4 py-2 text-sm outline-none"
+    />
+    <button type="submit" class="px-4 py-2 text-sm font-medium bg-slate-100 hover:bg-slate-200">
+      Search
+    </button>
+  </div>
+</form>
+-->
+
+<% if (!q || q.trim() === "") { %>
+  <!-- HERO SECTION -->
+  <section class="relative overflow-hidden mb-2 border-b rounded-2xl shadow-md border-slate-200 bg-linear-to-b from-slate-50 to-white py-20">
+  <div class="mx-auto max-w-7xl px-4">
+    <div class="flex flex-col items-center gap-14 md:flex-row md:items-center">
+
+      <!-- CONTENT -->
+      <div class="max-w-xl ">
+
+        <span class="inline-flex items-center mb-2 rounded-full bg-slate-900 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white">
+          Premium Rental Wardrobe
+        </span>
+
+        <h1 class="mt-6 text-5xl font-semibold leading-tight tracking-tight text-slate-900">
+          Rent the outfit.<br />
+          Own the moment.
+        </h1>
+
+        <p class="mt-6 text-lg leading-relaxed text-slate-600">
+          Curated ethnic and formal wear for weddings, festivities,
+          and unforgettable moments — without the commitment of ownership.
+        </p>
+
+        <div class="mt-10 flex flex-wrap gap-4">
+          <a
+            href="#listings-cloth"
+            class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-8 py-4 text-sm font-semibold text-white shadow-lg transition hover:bg-slate-950"
+          >
+            Browse Collection
+          </a>
+
+          <a
+            href="#how-it-works"
+            class="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-8 py-4 text-sm font-semibold text-slate-800 shadow-sm transition hover:bg-slate-100"
+          >
+            How it works
+          </a>
+        </div>
+      </div>
+
+      <!-- IMAGE -->
+      <div class="relative flex w-full max-w-md justify-center">
+        <div class="absolute inset-0 -z-10 rounded-3xl bg-slate-200 blur-3xl opacity-40"></div>
+
+        <img
+          src="/assets/closet flow.png"
+          alt="Premium outfits"
+          class="w-full rounded-3xl object-contain shadow-2xl"
+        />
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+  <!-- HOW IT WORKS -->
+  <section id="how-it-works" class="border-t mb-2 rounded-2xl shadow-md border-slate-200 bg-white py-10">
+  <div class="mx-auto max-w-7xl px-4 text-center">
+
+    <!-- SECTION HEADER -->
+    <h2 class="text-3xl font-semibold tracking-tight text-slate-900">
+      How ClosetFlow Works
+    </h2>
+    <p class="mx-auto  max-w-2xl text-base text-slate-600">
+      A seamless rental experience designed for modern occasions.
+    </p>
+
+    <!-- STEPS -->
+    <div class="mt-8 grid gap-8 md:grid-cols-3">
+
+      <!-- STEP 1 -->
+      <div class="group rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-2 hover:shadow-lg!">
+        <div class="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">
+          01
+        </div>
+        <h5 class="text-md font-semibold text-slate-900">
+          Browse
+        </h5>
+        <p class="mt-2 text-sm leading-relaxed text-slate-600">
+          Explore premium outfits curated for weddings, festivities, and formal events.
+        </p>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="group rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-2 hover:shadow-lg!">
+        <div class="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">
+          02
+        </div>
+        <h5 class="text-md font-semibold text-slate-900">
+          Rent
+        </h5>
+        <p class="mt-2 text-sm leading-relaxed text-slate-600">
+          Select your dates, confirm availability, and reserve in minutes.
+        </p>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="group rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-2 hover:shadow-lg!">
+        <div class="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">
+          03
+        </div>
+        <h5 class="text-md font-semibold text-slate-900">
+          Return
+        </h5>
+        <p class="mt-2 text-sm leading-relaxed text-slate-600">
+          Wear it confidently, then return it effortlessly. No ownership worries.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<% } %>
+
+<!-- LISTINGS GRID -->
+<section id="listings-cloth" class="py-12 mb-2 rounded-2xl shadow-lg border-slate-200 bg-white ">
+  <div class="mx-auto max-w-7xl px-4">
+    <div class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+
+      <% for(let listing of listings) { %>
+        <a href="/listings/<%= listing._id %>" class="group block">
+          <div class="overflow-hidden rounded-xl border bg-white shadow-sm transition hover:shadow-md">
+
+            <div class="h-80 w-full overflow-hidden">
+              <img
+                src="<%= listing.image %>"
+                alt="listing_img"
+                class="h-full w-full object-cover object-top transition group-hover:scale-105"
+              />
+            </div>
+
+            <div class="p-4">
+              <p class="text-sm font-semibold text-slate-900">
+                <%= listing.title %>
+              </p>
+              <p class="mt-1 text-sm text-slate-600">
+                ₹ <%= listing.pricePerDay.toLocaleString("en-IN") %>/day
+              </p>
+            </div>
+
+          </div>
+        </a>
+      <% } %>
+
+    </div>
+  </div>
+</section>

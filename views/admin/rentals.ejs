@@ -1,0 +1,41 @@
+<% layout("/layouts/boilerplate.ejs") -%>
+
+<div class="container mt-5">
+    <h3>All Rentals</h3>
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Listing</th>
+                <th>User</th>
+                <th>Period</th>
+                <th>Price (₹)</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% rentals.forEach(rental => { %>
+                <tr>
+                    <td><%= rental.listing.title %></td>
+                    <td><%= rental.user.username %> (<%= rental.user.email %>)</td>
+                    <td><%= rental.rentalPeriod.start.toLocaleDateString() %> - <%= rental.rentalPeriod.end.toLocaleDateString() %></td>
+                    <td><%= rental.price.toLocaleString("en-IN") %></td>
+                    <td>
+                        <span class="badge <%= rental.status === 'completed' ? 'bg-success' : 'bg-warning' %>">
+                            <%= rental.status %>
+                        </span>
+                    </td>
+                    <td>
+                        <% if (rental.status !== 'completed') { %>
+                            <form action="/admin/rentals/<%= rental._id %>/complete?_method=PUT" method="POST">
+                                <button class="btn btn-sm btn-success">Mark Completed</button>
+                            </form>
+                        <% } else { %>
+                            <span class="text-muted">Done</span>
+                        <% } %>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
