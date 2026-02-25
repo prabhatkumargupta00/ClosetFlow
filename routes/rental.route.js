@@ -6,6 +6,7 @@ const { isLoggedIn, isAdmin } = require("../middlewares/auth.middleware");
 // User rental routes
 router.get("/:id",  rentals.rentForm)
 router.post("/:id/rent", isLoggedIn, rentals.rentListing);
+router.put("/:id/complete", isLoggedIn, rentals.completeUserRental);
 
 // Admin rental management
 router.get("/admin", isLoggedIn, isAdmin, rentals.allRentals);

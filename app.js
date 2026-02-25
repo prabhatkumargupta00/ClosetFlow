@@ -7,9 +7,11 @@ const mongoose = require("mongoose")
 const path = require("path")
 const methodOverride = require("method-override")
 const ejsMate = require("ejs-mate")
+// const helmet = require('helmet');
+
+
+
 const ExpressError = require('./utils/expressError.js');
-
-
 const listingRoutes = require("./routes/listings.route.js");
 const adminRoutes = require('./routes/admin.route.js')
 const rentalRoutes = require('./routes/rental.route.js')
@@ -30,6 +32,7 @@ app.engine("ejs", ejsMate)
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")))
+// app.use(helmet());
 
 app.use(
     session({
@@ -39,6 +42,7 @@ app.use(
         cookie: {
             // keep session cookie for 1 day (ms)
             maxAge: 1000 * 60 * 60 * 24,
+            httpOnly: true,
         },
     })
 );

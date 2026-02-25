@@ -9,6 +9,7 @@
                 <th>Period</th>
                 <th>Price (₹)</th>
                 <th>Status</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -21,6 +22,16 @@
                         <span class="badge <%= rental.status === 'completed' ? 'bg-success' : 'bg-primary' %>">
                             <%= rental.status %>
                         </span>
+                    </td>
+                    <td>
+                        <% if (rental.status !== 'completed') { %>
+                            <form action="/rentals/<%= rental._id %>/complete?_method=PUT" method="POST" 
+                                  onsubmit="return confirm('Are you sure you want to mark this rental as completed?')">
+                                <button class="btn btn-sm btn-success">Mark as Returned</button>
+                            </form>
+                        <% } else { %>
+                            <span class="text-muted">Completed</span>
+                        <% } %>
                     </td>
                 </tr>
             <% }) %>

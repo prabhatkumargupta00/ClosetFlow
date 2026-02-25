@@ -1,5 +1,6 @@
 const Listing = require("../models/listing.model");
-const uploadFile = require('../utils/storage.imageKit.js')
+const Rental = require("../models/rental.model");
+const { uploadFile, deleteFile } = require('../utils/storage.imageKit.js')
 
 module.exports.renderNewForm = (req, res) => {
     res.render("listings/new.ejs");
@@ -48,7 +49,7 @@ module.exports.saveNewListing = async (req, res) => {
     res.redirect("/listings");
 }
 
-module.exports.showSingleListing =  async (req, res) => {
+module.exports.showSingleListing = async (req, res) => {
     const { id } = req.params;
     const listing = await Listing.findById(id);
     if (!listing) {
@@ -100,6 +101,34 @@ module.exports.rendListing = async (req, res) => {
 
 module.exports.deleteListing = async (req, res) => {
     const { id } = req.params;
+
+    // Find the listing to get the image file ID
+    const listing = await Listing.findById(id);
+    if (!listing) {
+        throw new ExpressError("Listing not found", 404);
+    }
+
+    // Check for active rentals
+    const activeRentals = await Rental.find({
+        listing: id,
+        status: 'rented'
+    });
+
+    if (activeRentals.length > 0) {
+        throw new ExpressError("Cannot delete listing with active rentals", 400);
+    }
+
+    // Delete the image from ImageKit if it exists
+    if (listing.imageFileId) {
+        try {
+            await deleteFile(listing.imageFileId);
+        } catch (error) {
+            console.error('Failed to delete image from ImageKit:', error);
+            // Continue with listing deletion even if image deletion fails
+        }
+    }
+
+    // Delete the listing from database
     await Listing.findByIdAndDelete(id);
     res.redirect("/listings");
 }

@@ -21,7 +21,7 @@ const listingSchema = new Schema(
         },
         imageFileId: {
             type: String, // chahiye because delete/replace image from ImageKit
-            required: true,
+            required: false, // Make optional for existing listings
         },
         // image: {
         //     type: String,
