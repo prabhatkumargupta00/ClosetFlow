@@ -24,11 +24,11 @@ const listingSchema = Joi.object({
 
         category: Joi.string()
             .valid("Lehenga", "Kurta Pajama", "Sherwani", "Anarkali", "Suit", "Bandhgala")
-            .required(),
+            .allow("", null),
 
         occasion: Joi.string()
             .valid("Wedding", "Reception", "Festive", "Corporate", "Formal")
-            .required(),
+            .allow("", null),
 
         size: Joi.array()
             .items(Joi.string().valid("S", "M", "L", "XL"))
@@ -37,7 +37,7 @@ const listingSchema = Joi.object({
             .messages({ "array.min": "At least one size must be selected" }),
 
         fitType: Joi.string()
-            .valid("Slim", "Regular", "Relaxed")
+            .valid("Slim", "Regular", "Relaxed", "Oversized", "Tailored")
             .default("Regular"),
 
         rentalStatus: Joi.string()
@@ -89,6 +89,9 @@ const rentalSchema = Joi.object({
             "any.required": "End date is required",
             "date.base": "End date must be a valid date"
         }),
+
+    size: Joi.string().required()
+        .messages({"any.required": "Size selection is required"}),
 });
 
 // ─── Reusable validate middleware factory ─────────────────────────

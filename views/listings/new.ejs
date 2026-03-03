@@ -66,9 +66,9 @@
           <div class="grid gap-5 md:grid-cols-2">
             <div>
               <label class="mb-1 block text-sm font-medium text-slate-700">Category</label>
-              <select name="listing[category]" required
+              <select name="listing[category]"
                 class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900">
-                <option value="">Select category</option>
+                <option value="">None</option>
                 <option>Lehenga</option>
                 <option>Kurta Pajama</option>
                 <option>Sherwani</option>
@@ -80,9 +80,9 @@
 
             <div>
               <label class="mb-1 block text-sm font-medium text-slate-700">Occasion</label>
-              <select name="listing[occasion]" required
+              <select name="listing[occasion]"
                 class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900">
-                <option value="">Select occasion</option>
+                <option value="">None</option>
                 <option>Wedding</option>
                 <option>Reception</option>
                 <option>Festive</option>
@@ -114,6 +114,8 @@
               <option value="Regular" selected>Regular</option>
               <option value="Slim">Slim</option>
               <option value="Relaxed">Relaxed</option>
+              <option value="Oversized">Oversized</option>
+              <option value="Tailored">Tailored</option>
             </select>
           </div>
 
@@ -127,7 +129,7 @@
           <!-- Submit -->
           <div class="pt-4">
             <button type="submit"
-              class="w-full rounded-md bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-950">
+              class="w-full rounded-md! bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-950">
               Add Listing
             </button>
           </div>

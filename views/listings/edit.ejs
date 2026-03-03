@@ -69,8 +69,9 @@
                     <div class="grid gap-5 md:grid-cols-2">
                         <div>
                             <label class="mb-1 block text-sm font-medium text-slate-700">Category</label>
-                            <select name="listing[category]" required
+                            <select name="listing[category]"
                                 class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900">
+                                <option value="" <%= !listing.category ? "selected" : "" %>>None</option>
                                 <% ["Lehenga","Kurta Pajama","Sherwani","Anarkali","Suit","Bandhgala"].forEach(cat=> {
                                     %>
                                     <option value="<%= cat %>" <%=listing.category===cat ? "selected" : "" %>>
@@ -82,8 +83,9 @@
 
                         <div>
                             <label class="mb-1 block text-sm font-medium text-slate-700">Occasion</label>
-                            <select name="listing[occasion]" required
+                            <select name="listing[occasion]"
                                 class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900">
+                                <option value="" <%= !listing.occasion ? "selected" : "" %>>None</option>
                                 <% ["Wedding","Reception","Festive","Corporate","Formal"].forEach(occ=> { %>
                                     <option value="<%= occ %>" <%=listing.occasion===occ ? "selected" : "" %>>
                                         <%= occ %>
@@ -114,7 +116,7 @@
                         <label class="mb-1 block text-sm font-medium text-slate-700">Fit Type</label>
                         <select name="listing[fitType]"
                             class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900">
-                            <% ["Slim","Regular","Relaxed"].forEach(fit=> { %>
+                            <% ["Slim","Regular","Relaxed","Oversized","Tailored"].forEach(fit=> { %>
                                 <option value="<%= fit %>" <%=listing.fitType===fit ? "selected" : "" %>>
                                     <%= fit %>
                                 </option>

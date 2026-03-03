@@ -43,6 +43,24 @@
                 />
             </div>
 
+            <div>
+                <label
+                    for="size"
+                    class="block ml-1 text-md font-medium text-gray-700"
+                    >Size</label
+                >
+                <select
+                    name="size"
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    required
+                >
+                    <option value="">Select size</option>
+                    <% listing.size.forEach(s => { %>
+                        <option value="<%= s %>"><%= s %></option>
+                    <% }) %>
+                </select>
+            </div>
+
             <button
                 type="submit"
                 class="mt-1 text-white block bg-success w-full px-4 py-2 border border-gray-300 rounded-lg! shadow-md font-semibold"

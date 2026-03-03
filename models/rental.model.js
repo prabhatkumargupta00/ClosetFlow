@@ -28,6 +28,10 @@ const rentalSchema = new Schema(
             enum: ["rented", "completed"],
             default: "rented",
         },
+        size: {
+            type: String,
+            required: true,
+        },
         price: {
             type: Number,
             required: true,

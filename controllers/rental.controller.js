@@ -11,6 +11,7 @@ module.exports.rentForm = async (req, res, next) => {
         if (!listing) {
             throw new ExpressError("Listing not found", 404);
         }
+        // pass sizes to template so renter can choose
         res.render("rentals/rentForm", { listing });
     } catch (err) {
         next(err);
@@ -20,7 +21,7 @@ module.exports.rentForm = async (req, res, next) => {
 module.exports.rentListing = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const { start, end } = req.body; // get rental period from form
+        const { start, end, size } = req.body; // get rental period and size from form
 
         // Simple date validation
         const startDate = new Date(start);
@@ -44,6 +45,14 @@ module.exports.rentListing = async (req, res, next) => {
 
         if (listing.owner && listing.owner.toString() === req.session.userId.toString()) {
             throw new ExpressError("You cannot rent your own listing.", 400);
+        }
+
+        // Ensure size was selected and valid
+        if (!size) {
+            throw new ExpressError("Size must be selected.", 400);
+        }
+        if (!listing.size.includes(size)) {
+            throw new ExpressError("Selected size not available for this listing.", 400);
         }
 
         // Calculate rental days
