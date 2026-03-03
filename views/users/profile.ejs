@@ -1,0 +1,107 @@
+<% layout("/layouts/boilerplate.ejs") -%>
+
+<div class="container mx-auto mt-8 max-w-4xl px-4 pb-16">
+
+    <!-- Header Section -->
+    <div class="bg-white border rounded-lg p-8 flex flex-col items-center text-center shadow-sm">
+        
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900"><%= user.username %></h1>
+            <span class="inline-block mt-2 px-3 py-1 bg-gray-100 text-gray-700 text-xs font-semibold rounded-full uppercase tracking-wide border border-gray-200">
+                <%= user.role %>
+            </span>
+            <div class="text-gray-500 mt-4 space-y-1.5 text-sm flex flex-col items-center">
+                <p class="flex items-center"><i class="fa-solid fa-envelope w-5 mr-1"></i><%= user.email %></p>
+                <p class="flex items-center"><i class="fa-regular fa-calendar w-5 mr-1"></i>Joined <%= user.createdAt.toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }) %></p>
+            </div>
+        </div>
+        
+        <div class="flex flex-row justify-center gap-3 mt-6">
+            <a href="/my-rentals" class="px-6 py-2.5 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition text-sm font-medium no-underline">
+                View My Rentals
+            </a>
+            <% if (user.role === 'admin') { %>
+            <a href="/admin/dashboard" class="px-6 py-2.5 bg-yellow-400 text-yellow-900 rounded-lg hover:bg-yellow-500 transition text-sm font-medium no-underline">
+                Admin Panel
+            </a>
+            <% } %>
+        </div>
+    </div>
+
+
+
+
+    <!-- Admin Links -->
+    <% if (user.role === 'admin') { %>
+    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-5 mt-6 shadow-sm">
+        <h2 class="text-sm font-bold text-yellow-800 uppercase tracking-wider mb-3">Admin Quick Links</h2>
+        <div class="flex flex-wrap gap-2">
+            <a href="/admin/listings" class="px-4 py-2 bg-white border border-yellow-300 text-yellow-800 rounded-lg hover:bg-yellow-100 transition text-sm font-medium no-underline">Manage Listings</a>
+            <a href="/admin/rentals" class="px-4 py-2 bg-white border border-yellow-300 text-yellow-800 rounded-lg hover:bg-yellow-100 transition text-sm font-medium no-underline">All Rentals</a>
+            <a href="/listings/new" class="px-4 py-2 bg-white border border-yellow-300 text-yellow-800 rounded-lg hover:bg-yellow-100 transition text-sm font-medium no-underline">Add New Listing</a>
+        </div>
+    </div>
+    <% } %>
+
+    <!-- Recent Rentals -->
+    <div class="flex justify-between items-center mt-10 mb-5">
+        <h2 class="text-xl font-bold text-gray-900">Recent Rentals</h2>
+        <% if (recentRentals.length > 0) { %>
+            <a href="/my-rentals" class="text-sm font-medium text-blue-600 hover:text-blue-800 no-underline">View All</a>
+        <% } %>
+    </div>
+    
+    <% if (recentRentals.length === 0) { %>
+        <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-10 text-center shadow-sm max-w-2xl mx-auto my-6">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white shadow-sm mb-6">
+                <i class="fa-solid fa-bag-shopping text-3xl text-indigo-400"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">No rentals yet</h3>
+            <p class="text-gray-600 mb-8 max-w-sm mx-auto">You haven't rented any outfits yet. Start exploring our premium collection and rent your first outfit today!</p>
+            <div class="pb-2">
+                <a href="/listings" class="inline-block bg-indigo-600 text-white font-medium px-6 py-2 rounded-lg hover:bg-indigo-700 transition shadow-sm no-underline">
+                    Browse Outfits
+                </a>
+            </div>
+        </div>
+    <% } else { %>
+        <div class="grid gap-4 grid-cols-2">
+            <% recentRentals.forEach(rental => { %>
+                <div class="bg-white border rounded-lg flex overflow-hidden shadow-sm hover:shadow-md transition">
+                    <% if (rental.listing && rental.listing.image) { %>
+                        <div class="w-32 bg-gray-100 shrink-0">
+                            <img src="<%= rental.listing.image %>" alt="<%= rental.listing.title %>" class="w-full h-full object-cover">
+                        </div>
+                    <% } else { %>
+                        <div class="w-32 bg-gray-100 flex items-center justify-center text-gray-300 shrink-0">
+                            <i class="fa-solid fa-image text-2xl"></i>
+                        </div>
+                    <% } %>
+                    
+                    <div class="p-4 flex-1 flex flex-col justify-center">
+                        <div class="flex justify-between items-start gap-2">
+                            <h4 class="font-bold text-gray-900 truncate">
+                                <% if (rental.listing) { %>
+                                    <a href="/listings/<%= rental.listing._id %>" class="no-underline text-gray-900 hover:text-blue-600"><%= rental.listing.title %></a>
+                                <% } else { %>
+                                    <span class="text-gray-500">Deleted Item</span>
+                                <% } %>
+                            </h4>
+                            <% if (rental.status === 'completed') { %>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded font-medium shrink-0">Done</span>
+                            <% } else { %>
+                                <span class="bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded font-medium shrink-0">Active</span>
+                            <% } %>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">
+                            <%= rental.rentalPeriod.start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }) %> - 
+                            <%= rental.rentalPeriod.end.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }) %>
+                        </p>
+                        <p class="font-bold text-gray-900 mt-2">₹<%= rental.price.toLocaleString("en-IN") %></p>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+
+</div>

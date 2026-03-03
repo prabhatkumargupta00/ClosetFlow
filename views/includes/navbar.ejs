@@ -51,8 +51,12 @@
 
                         <div id="userMenu"
                             class="absolute h-fit mt-4 w-52 hidden rounded-md! border bg-slate-900 shadow-lg">
+                            <a href="/profile"
+                                class="block px-5 py-2 text-nowrap text-md border-b border-slate-800/50 hover:bg-white/10 no-underline text-white">
+                                <i class="fa-solid fa-user mr-2"></i>My Profile
+                            </a>
                             <% if (currentUserRole==="user" ) { %>
-                                <a href="/my-Rentals"
+                                <a href="/my-rentals"
                                     class="block px-5 py-2 text-nowrap text-md border-b border-slate-800/50 hover:bg-white/10 no-underline text-white">
                                     My Rentals
                                 </a>
@@ -108,8 +112,11 @@
                 <% } %>
 
                     <% if (currentUser) { %>
-                        <a href="/dashboard" class="px-3 py-2 text-sm hover:bg-white/10 no-underline text-white">
-                            Dashboard
+                        <a href="/profile" class="px-3 py-2 text-sm hover:bg-white/10 no-underline text-white">
+                            <i class="fa-solid fa-user mr-2"></i>My Profile
+                        </a>
+                        <a href="/my-rentals" class="px-3 py-2 text-sm hover:bg-white/10 no-underline text-white">
+                            My Rentals
                         </a>
 
                         <form action="/logout" method="POST">

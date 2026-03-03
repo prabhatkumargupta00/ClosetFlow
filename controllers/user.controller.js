@@ -26,8 +26,8 @@ module.exports.register = async (req, res, next) => {
         res.redirect("/listings");
     } catch (err) {
         if (err.code === 11000) {
-            // Duplicate email error
-            next(new ExpressError("Email already in use. Please try another email.", 400));
+            // Duplicate email or username error
+            next(new ExpressError("Email or Username already in use. Please try another.", 400));
         } else {
             next(err);
         }
@@ -41,14 +41,13 @@ module.exports.renderLogin = (req, res) => {
 module.exports.login = async (req, res) => {
     const { email, password } = req.body;
 
+    const DUMMY_HASH = "$2b$12$invalidhashfortimingprotection00000000000000000000";
     const user = await User.findOne({ email });
-    if (!user) {
-        return res.redirect("/login");
-    }
+    const hashToCheck = user ? user.password : DUMMY_HASH;
+    const validPassword = await bcrypt.compare(password, hashToCheck);
 
-    const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) {
-        return res.redirect("/login");
+    if (!user || !validPassword) {
+        return res.render("users/login", { error: "Invalid email or password" });
     }
 
     // Session hydration
@@ -84,11 +83,49 @@ module.exports.logout = (req, res) => {
     });
 };
 
-module.exports.myRentals = async (req, res) => {
-    const rentals = await rentalModel.find({ user: req.session.userId })
-        .populate("listing")
-        .sort({ "rentalPeriod.start": -1 });
+module.exports.myRentals = async (req, res, next) => {
+    try {
+        const rentals = await rentalModel.find({ user: req.session.userId })
+            .populate("listing")
+            .sort({ "rentalPeriod.start": -1 });
 
-    res.render("users/myRentals", { rentals });
+        res.render("users/myRentals", { rentals });
+    } catch (err) {
+        next(err);
+    }
+};
+
+module.exports.renderProfile = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.session.userId).select("-password");
+        if (!user) {
+            throw new ExpressError("User not found", 404);
+        }
+
+        const totalRentals = await rentalModel.countDocuments({ user: user._id });
+        const activeRentals = await rentalModel.countDocuments({ user: user._id, status: "rented" });
+        const completedRentals = await rentalModel.countDocuments({ user: user._id, status: "completed" });
+
+        // Calculate total amount spent
+        const spentResult = await rentalModel.aggregate([
+            { $match: { user: user._id } },
+            { $group: { _id: null, total: { $sum: "$price" } } }
+        ]);
+        const totalSpent = spentResult.length > 0 ? spentResult[0].total : 0;
+
+        // Get recent rentals (last 5)
+        const recentRentals = await rentalModel.find({ user: user._id })
+            .populate("listing")
+            .sort({ createdAt: -1 })
+            .limit(5);
+
+        res.render("users/profile", {
+            user,
+            stats: { totalRentals, activeRentals, completedRentals, totalSpent },
+            recentRentals
+        });
+    } catch (err) {
+        next(err);
+    }
 };
 

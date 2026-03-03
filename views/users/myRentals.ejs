@@ -1,40 +1,82 @@
 <% layout("/layouts/boilerplate.ejs") -%>
 
-<div class="container mt-5">
-    <h3>My Rentals</h3>
-    <table class="table table-bordered mt-3">
-        <thead>
-            <tr>
-                <th>Listing</th>
-                <th>Period</th>
-                <th>Price (₹)</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% rentals.forEach(rental => { %>
-                <tr>
-                    <td><%= rental.listing.title %></td>
-                    <td><%= rental.rentalPeriod.start.toLocaleDateString() %> - <%= rental.rentalPeriod.end.toLocaleDateString() %></td>
-                    <td><%= rental.price.toLocaleString("en-IN") %></td>
-                    <td>
-                        <span class="badge <%= rental.status === 'completed' ? 'bg-success' : 'bg-primary' %>">
-                            <%= rental.status %>
-                        </span>
-                    </td>
-                    <td>
-                        <% if (rental.status !== 'completed') { %>
-                            <form action="/rentals/<%= rental._id %>/complete?_method=PUT" method="POST" 
-                                  onsubmit="return confirm('Are you sure you want to mark this rental as completed?')">
-                                <button class="btn btn-sm btn-success">Mark as Returned</button>
-                            </form>
-                        <% } else { %>
-                            <span class="text-muted">Completed</span>
-                        <% } %>
-                    </td>
-                </tr>
-            <% }) %>
-        </tbody>
-    </table>
+<div class="container mt-5 mb-16">
+    <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-bold text-gray-900 m-0">My Rentals</h3>
+    </div>
+
+    <% if (rentals && rentals.length > 0) { %>
+        <div class="bg-white rounded-lg shadow-sm border overflow-hidden">
+            <table class="table table-hover mb-0">
+                <thead class="bg-gray-50 border-b">
+                    <tr>
+                        <th class="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Listing</th>
+                        <th class="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Period</th>
+                        <th class="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Price (₹)</th>
+                        <th class="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <% rentals.forEach(rental => { %>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <% if (rental.listing) { %>
+                                    <a href="/listings/<%= rental.listing._id %>" class="font-medium text-blue-600 hover:text-blue-800 no-underline">
+                                        <%= rental.listing.title %>
+                                    </a>
+                                <% } else { %>
+                                    <span class="text-gray-500 italic">Deleted Listing</span>
+                                <% } %>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                <% if (rental.rentalPeriod && rental.rentalPeriod.start && rental.rentalPeriod.end) { %>
+                                    <%= rental.rentalPeriod.start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) %> - 
+                                    <%= rental.rentalPeriod.end.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) %>
+                                <% } else { %>
+                                    <span class="text-gray-500 italic">Invalid date</span>
+                                <% } %>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                ₹<%= rental.price.toLocaleString("en-IN") %>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <% if (rental.status === 'completed') { %>
+                                    <span class="px-2.5 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full border border-green-200">Returned</span>
+                                <% } else { %>
+                                    <span class="px-2.5 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full border border-blue-200"><%= rental.status %></span>
+                                <% } %>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <% if (rental.status !== 'completed') { %>
+                                    <form action="/rentals/<%= rental._id %>/complete?_method=PUT" method="POST" 
+                                          onsubmit="return confirm('Are you sure you want to mark this rental as returned?')">
+                                        <button type="submit" class="px-3 py-1.5 bg-gray-900 hover:bg-gray-800 text-white text-xs font-medium rounded-md transition shadow-sm">
+                                            Return Item
+                                        </button>
+                                    </form>
+                                <% } else { %>
+                                    <span class="text-gray-400 font-medium text-sm">Completed</span>
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    <% } else { %>
+        <!-- Empty State -->
+        <div class="mt-8 mb-12 max-w-2xl mx-auto bg-white border border-dashed border-gray-300 rounded-2xl p-10 flex items-center gap-8">
+            <div class="shrink-0 w-24 h-24 rounded-2xl bg-gray-100 flex items-center justify-center text-gray-300">
+                <i class="fa-solid fa-shirt text-4xl"></i>
+            </div>
+            <div class="text-left">
+                <h3 class="text-lg font-bold text-gray-900 mb-1">Your rental history is empty</h3>
+                <p class="text-gray-500 text-sm mb-4 leading-relaxed">No outfits rented yet. Browse our collection of premium ethnic wear and book your first outfit today!</p>
+                <a href="/listings" class="px-5 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition no-underline">
+                    Browse Outfits →
+                </a>
+            </div>
+        </div>
+    <% } %>
 </div>
