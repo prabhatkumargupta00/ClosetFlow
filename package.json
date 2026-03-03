@@ -16,12 +16,14 @@
     "dependencies": {
         "@imagekit/nodejs": "^7.3.0",
         "bcrypt": "^6.0.0",
+        "connect-mongo": "^6.0.0",
         "dotenv": "^17.2.4",
         "ejs": "^3.1.10",
         "ejs-mate": "^4.0.0",
         "express": "^5.1.0",
         "express-session": "^1.19.0",
         "helmet": "^8.1.0",
+        "joi": "^18.0.2",
         "method-override": "^3.0.0",
         "mongoose": "^8.16.4",
         "multer": "^2.0.2"

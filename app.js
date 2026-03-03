@@ -7,7 +7,7 @@ const mongoose = require("mongoose")
 const path = require("path")
 const methodOverride = require("method-override")
 const ejsMate = require("ejs-mate")
-// const helmet = require('helmet');
+const helmet = require('helmet');
 
 
 
@@ -16,9 +16,11 @@ const listingRoutes = require("./routes/listings.route.js");
 const adminRoutes = require('./routes/admin.route.js')
 const rentalRoutes = require('./routes/rental.route.js')
 const userRoutes = require("./routes/user.route.js");
+const reviewRoutes = require("./routes/review.route.js");
 
 
 const session = require("express-session");
+const { MongoStore } = require("connect-mongo");
 
 
 // Configure view engine
@@ -32,17 +34,55 @@ app.engine("ejs", ejsMate)
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")))
-// app.use(helmet());
+
+// Security headers via Helmet
+// try to fully understand it : how it workd
+app.use(
+    helmet({
+        contentSecurityPolicy: {
+            directives: {
+                defaultSrc: ["'self'"],
+                scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
+                styleSrc: [
+                    "'self'",
+                    "'unsafe-inline'",
+                    "https://cdn.jsdelivr.net",
+                    "https://cdnjs.cloudflare.com",
+                    "https://fonts.googleapis.com",
+                ],
+                fontSrc: [
+                    "'self'",
+                    "https://fonts.gstatic.com",
+                    "https://cdnjs.cloudflare.com",
+                ],
+                imgSrc: [
+                    "'self'",
+                    "data:",
+                    "https://ik.imagekit.io",
+                    "https://images.unsplash.com",
+                ],
+                connectSrc: ["'self'", "https://cdn.jsdelivr.net", "https://ik.imagekit.io"],
+                scriptSrcAttr: ["'unsafe-inline'"],
+                formAction: ["'self'"],
+            },
+        },
+    })
+);
 
 app.use(
     session({
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: false,
+        store: MongoStore.create({
+            mongoUrl: process.env.MONGO_URL,
+            touchAfter: 24 * 3600, // only update session once per day (seconds)
+        }),
         cookie: {
             // keep session cookie for 1 day (ms)
             maxAge: 1000 * 60 * 60 * 24,
             httpOnly: true,
+            sameSite: 'Lax',
         },
     })
 );
@@ -60,6 +100,12 @@ app.use((req, res, next) => {
 //     next();
 // });
 
+// Routes
+// Root route redirect
+app.get("/", (req, res) => {
+    res.redirect("/listings");
+});
+
 // user routes goes here
 app.use("/", userRoutes);
 app.use("/listings", listingRoutes);
@@ -70,13 +116,11 @@ app.use("/admin", adminRoutes);
 // rental routes goes here
 app.use('/rentals', rentalRoutes)
 
+// review routes goes here (nested under listings)
+app.use('/listings/:id/reviews', reviewRoutes)
 
 
-// Routes
-// Root route redirect
-app.get("/", (req, res) => {
-    res.redirect("/listings");
-});
+
 
 
 main()

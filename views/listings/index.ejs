@@ -136,35 +136,46 @@
 <% } %>
 
 <!-- LISTINGS GRID -->
-<section id="listings-cloth" class="py-12 mb-2 rounded-2xl shadow-lg border-slate-200 bg-white ">
+<section id="listings-cloth" class="py-12 mb-2 rounded-2xl shadow-lg border-slate-200 bg-white">
   <div class="mx-auto max-w-7xl px-4">
-    <div class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 
-      <% for(let listing of listings) { %>
-        <a href="/listings/<%= listing._id %>" class="group block">
-          <div class="overflow-hidden rounded-xl border bg-white shadow-sm transition hover:shadow-md">
-
-            <div class="h-80 w-full overflow-hidden">
-              <img
-                src="<%= listing.image %>"
-                alt="listing_img"
-                class="h-full w-full object-cover object-top transition group-hover:scale-105"
-              />
+    <% if (listings && listings.length > 0) { %>
+      <div class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <% for(let listing of listings) { %>
+          <a href="/listings/<%= listing._id %>" class="group block">
+            <div class="overflow-hidden rounded-xl border bg-white shadow-sm transition hover:shadow-md">
+              <div class="h-80 w-full overflow-hidden">
+                <img
+                  src="<%= listing.image %>"
+                  alt="listing_img"
+                  class="h-full w-full object-cover object-top transition group-hover:scale-105"
+                />
+              </div>
+              <div class="p-4">
+                <p class="text-sm font-semibold text-slate-900"><%= listing.title %></p>
+                <p class="mt-1 text-sm text-slate-600">₹ <%= listing.pricePerDay.toLocaleString("en-IN") %>/day</p>
+              </div>
             </div>
+          </a>
+        <% } %>
+      </div>
+    <% } else { %>
+      <!-- Empty State -->
+      <div class="py-24 text-center">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-slate-100 border border-slate-200 mb-6">
+          <i class="fa-solid fa-vest text-3xl text-slate-400"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-slate-800 mb-3">No outfits available yet</h3>
+        <p class="text-slate-500 text-sm max-w-md mx-auto mb-8">
+          The collection is currently empty. Check back soon — new ethnic wear outfits are being added for your special occasions.
+        </p>
+        <% if (currentUserRole === 'admin') { %>
+          <a href="/listings/new" class="inline-block px-6 py-3 bg-slate-900 text-white text-sm font-semibold rounded-lg hover:bg-slate-700 transition no-underline shadow-sm">
+            + Add First Listing
+          </a>
+        <% } %>
+      </div>
+    <% } %>
 
-            <div class="p-4">
-              <p class="text-sm font-semibold text-slate-900">
-                <%= listing.title %>
-              </p>
-              <p class="mt-1 text-sm text-slate-600">
-                ₹ <%= listing.pricePerDay.toLocaleString("en-IN") %>/day
-              </p>
-            </div>
-
-          </div>
-        </a>
-      <% } %>
-
-    </div>
   </div>
 </section>

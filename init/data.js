@@ -3,7 +3,7 @@ const sampleListings = [
         title: "Wedding Lehenga",
         description:
             "Red bridal lehenga with heavy gold embroidery, structured blouse, and embroidered dupatta for premium wedding ceremonies.",
-        image: "https://imgmediagumlet.lbb.in/media/2024/11/6736e4b1b25c7c176a7247db_1731650737253.jpg",
+        image: "https://images.unsplash.com/photo-1583391733959-b15132ceee0f?w=600&q=80",
         pricePerDay: 1500,
         location: "Bhopal",
         category: "Lehenga",
@@ -17,7 +17,7 @@ const sampleListings = [
         title: "Kurta Pajama Set",
         description:
             "Elegant silk kurta pajama set suitable for festive occasions and traditional gatherings.",
-        image: "https://rajanyas.com/cdn/shop/files/Untitleddesign-2023-09-26T115227.454.png?v=1695711580&width=1946",
+        image: "https://images.unsplash.com/photo-1596455607563-ad6193f76b19?w=600&q=80",
         pricePerDay: 1200,
         location: "Indore",
         category: "Kurta Pajama",
@@ -31,21 +31,21 @@ const sampleListings = [
         title: "Formal Sherwani",
         description:
             "Classic formal sherwani with intricate embroidery, designed for weddings and receptions.",
-        image: "https://www.parivarceremony.com/media/catalog/product/cache/14a1553305c404c221b3f13f50c007dd/p/1/p1251mw01-1.jpg",
+        image: "https://images.unsplash.com/photo-1610030469983-98e5509c5328?w=600&q=80",
         pricePerDay: 1800,
         location: "Delhi",
         category: "Sherwani",
         occasion: "Wedding",
         size: ["L", "XL"],
         fitType: "Slim",
-        rentalStatus: "reserved",
+        rentalStatus: "available",
         rating: 4.7,
     },
     {
         title: "Anarkali Gown",
         description:
             "Flowing Anarkali gown with sequin detailing, ideal for receptions and festive evenings.",
-        image: "https://www.meerasplussizestore.com/cdn/shop/products/Wine-sequin-anarkali-SCL_6618.jpg?v=1750317715&width=2000",
+        image: "https://images.unsplash.com/photo-1610486663273-0f1ed04505f9?w=600&q=80",
         pricePerDay: 2500,
         location: "Jaipur",
         category: "Anarkali",
@@ -59,7 +59,7 @@ const sampleListings = [
         title: "Designer Wedding Sherwani",
         description:
             "Premium designer sherwani for grooms, delivering a regal silhouette and luxury finish.",
-        image: "https://www.shaadibaraati.com/vendors-profile/79a09ec64d2c064c39c34b09376c907e.jpg",
+        image: "https://images.unsplash.com/photo-1598004576974-bc5db0c6ff74?w=600&q=80",
         pricePerDay: 2200,
         location: "Lucknow",
         category: "Sherwani",
@@ -73,7 +73,7 @@ const sampleListings = [
         title: "Three-Piece Suit",
         description:
             "Tailored three-piece suit suitable for corporate events, weddings, and formal occasions.",
-        image: "https://img.lazcdn.com/g/p/8a9c076aa59badd373feb29baeb9cbac.jpg_webp_720x720q80.jpg",
+        image: "https://images.unsplash.com/photo-1594938298596-fdd2c98d6dd1?w=600&q=80",
         pricePerDay: 2000,
         location: "Mumbai",
         category: "Suit",
@@ -87,7 +87,7 @@ const sampleListings = [
         title: "Classic Bandhgala Suit",
         description:
             "Minimalist bandhgala suit offering a refined ethnic look for formal and festive events.",
-        image: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519",
+        image: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=600&q=80",
         pricePerDay: 1600,
         location: "Jodhpur",
         category: "Bandhgala",

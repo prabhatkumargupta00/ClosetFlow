@@ -27,7 +27,11 @@
                     <!-- Image -->
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Upload Image</label>
-                        <input type="file" name="image" accept="image/*" required
+                        <div class="mb-2">
+                            <p class="text-sm text-slate-600">Current image:</p>
+                            <img src="<%= listing.image %>" alt="Current image" class="w-32 h-40 object-cover rounded-md border" />
+                        </div>
+                        <input type="file" name="image" accept="image/*"
                             class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
                     </div>
 
@@ -105,31 +109,17 @@
                         </div>
                     </div>
 
-                    <!-- Fit Type & Rental Status -->
-                    <div class="grid gap-5 md:grid-cols-2">
-                        <div>
-                            <label class="mb-1 block text-sm font-medium text-slate-700">Fit Type</label>
-                            <select name="listing[fitType]"
-                                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900">
-                                <% ["Slim","Regular","Relaxed"].forEach(fit=> { %>
-                                    <option value="<%= fit %>" <%=listing.fitType===fit ? "selected" : "" %>>
-                                        <%= fit %>
-                                    </option>
-                                    <% }) %>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="mb-1 block text-sm font-medium text-slate-700">Rental Status</label>
-                            <select name="listing[rentalStatus]"
-                                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900">
-                                <% ["available","reserved","rented"].forEach(status=> { %>
-                                    <option value="<%= status %>" <%=listing.rentalStatus===status ? "selected" : "" %>>
-                                        <%= status %>
-                                    </option>
-                                    <% }) %>
-                            </select>
-                        </div>
+                    <!-- Fit Type -->
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-slate-700">Fit Type</label>
+                        <select name="listing[fitType]"
+                            class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900">
+                            <% ["Slim","Regular","Relaxed"].forEach(fit=> { %>
+                                <option value="<%= fit %>" <%=listing.fitType===fit ? "selected" : "" %>>
+                                    <%= fit %>
+                                </option>
+                                <% }) %>
+                        </select>
                     </div>
 
                     <!-- Rating -->

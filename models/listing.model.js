@@ -90,6 +90,10 @@ const listingSchema = new Schema(
             max: 5,
             default: 0,
         },
+        owner: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+        },
     },
     {
         timestamps: true,

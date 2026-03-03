@@ -12,6 +12,7 @@
             </p>
         </div>
 
+        <% if (listings && listings.length > 0) { %>
         <!-- TABLE CARD -->
         <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
 
@@ -107,6 +108,21 @@
                 </table>
             </div>
         </div>
+        <% } else { %>
+        <!-- Empty State -->
+        <div class="mt-6 bg-slate-50 border border-slate-200 rounded-2xl py-20 text-center">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white shadow border border-slate-200 mb-5">
+                <i class="fa-solid fa-tags text-2xl text-slate-400"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-800 mb-2">No listings yet</h3>
+            <p class="text-slate-500 text-sm max-w-md mx-auto mb-6">
+                No outfit listings have been added to the platform. Add your first listing to start accepting rental bookings.
+            </p>
+            <a href="/listings/new" class="inline-block px-6 py-2.5 bg-slate-900 text-white text-sm font-semibold rounded-lg hover:bg-slate-700 transition no-underline shadow-sm">
+                + Add First Listing
+            </a>
+        </div>
+        <% } %>
 
         <!-- FOOTER ACTION -->
         <div class="mt-6">
