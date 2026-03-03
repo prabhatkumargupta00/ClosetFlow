@@ -2,14 +2,13 @@ const express = require("express");
 const router = express.Router();
 const rentals = require("../controllers/rental.controller");
 const { isLoggedIn, isAdmin } = require("../middlewares/auth.middleware");
+const { rentalSchema, validate } = require("../validators/schemas");
 
 // User rental routes
-router.get("/:id",  rentals.rentForm)
-router.post("/:id/rent", isLoggedIn, rentals.rentListing);
+router.get("/:id", isLoggedIn, rentals.rentForm)
+router.post("/:id/rent", isLoggedIn, validate(rentalSchema), rentals.rentListing);
 router.put("/:id/complete", isLoggedIn, rentals.completeUserRental);
 
-// Admin rental management
-router.get("/admin", isLoggedIn, isAdmin, rentals.allRentals);
-router.put("/admin/:id/complete", isLoggedIn, isAdmin, rentals.completeRental);
+
 
 module.exports = router;

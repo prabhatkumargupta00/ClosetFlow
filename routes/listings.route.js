@@ -3,8 +3,9 @@ const router = express.Router();
 const Listing = require("../models/listing.model.js");
 const ExpressError = require("../utils/expressError.js");
 const { isLoggedIn, isAdmin } = require("../middlewares/auth.middleware.js");
-const {index, renderNewForm, saveNewListing, showSingleListing, renderEditForm, applyEditedListing, deleteListing} = require("../controllers/listings.controller.js")
-const { rentListing } = require("../controllers/rental.controller.js");
+const { index, renderNewForm, saveNewListing, showSingleListing, renderEditForm, applyEditedListing, deleteListing } = require("../controllers/listings.controller.js")
+const { listingSchema, validate } = require("../validators/schemas.js");
+
 
 
 
@@ -36,21 +37,19 @@ router.get("/new", isLoggedIn, isAdmin, renderNewForm);
 //     res.redirect("/listings");
 // });
 
-router.post("/", isLoggedIn, isAdmin, upload.single("image"), saveNewListing)
+router.post("/", isLoggedIn, isAdmin, upload.single("image"), validate(listingSchema), saveNewListing)
 
 // SHOW – show single listing
 router.get("/:id", showSingleListing);
 
 // EDIT – edit form
-router.get("/:id/edit", isLoggedIn, isAdmin, renderEditForm );
+router.get("/:id/edit", isLoggedIn, isAdmin, renderEditForm);
 
 // UPDATE – apply edits
-router.put("/:id", isLoggedIn, isAdmin, upload.single("image"), applyEditedListing);
+router.put("/:id", isLoggedIn, isAdmin, upload.single("image"), validate(listingSchema), applyEditedListing);
 
-// RENT – user must be logged in
-router.post("/:id/rent", isLoggedIn, rentListing);
 
 // DELETE – remove listing
-router.delete("/:id", isLoggedIn, isAdmin, deleteListing );
+router.delete("/:id", isLoggedIn, isAdmin, deleteListing);
 
 module.exports = router;
