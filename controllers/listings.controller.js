@@ -13,19 +13,45 @@ module.exports.renderNewForm = (req, res, next) => {
 
 module.exports.index = async (req, res, next) => {
     try {
-        const { q } = req.query;
+        const { q, sort, category } = req.query;
+        const page = parseInt(req.query.page) || 1;
+        const limit = 6; // Listings per page
+        const skip = (page - 1) * limit;
 
-        let listings;
-
+        let query = {};
         if (q && q.trim() !== "") {
-            listings = await Listing.find({
-                $text: { $search: q }
-            });
-        } else {
-            listings = await Listing.find({});
+            query = { $text: { $search: q } };
+        }
+        
+        if (category && category !== "all") {
+            query.category = category;
         }
 
-        res.render("listings/index", { listings, q });
+        let sortCriteria = { createdAt: -1 }; // Default: Newest
+        if (sort === "price_low") {
+            sortCriteria = { pricePerDay: 1 };
+        } else if (sort === "price_high") {
+            sortCriteria = { pricePerDay: -1 };
+        } else if (sort === "oldest") {
+            sortCriteria = { createdAt: 1 };
+        }
+
+        const listings = await Listing.find(query)
+            .sort(sortCriteria)
+            .skip(skip)
+            .limit(limit);
+
+        const totalListings = await Listing.countDocuments(query);
+        const totalPages = Math.ceil(totalListings / limit);
+
+        res.render("listings/index", { 
+            listings, 
+            q: q || "", 
+            sort: sort || "newest",
+            category: category || "all",
+            currentPage: page, 
+            totalPages 
+        });
     } catch (err) {
         next(err);
     }
@@ -46,13 +72,17 @@ module.exports.saveNewListing = async (req, res, next) => {
 
         const result = await uploadFile(file.buffer.toString('base64'))
 
+        const { title, description, pricePerDay, location, brand, color, category, occasion, size, fitType } = req.body.listing;
+
         const listing = await Listing.create({
-            ...req.body.listing,
+            title, description, pricePerDay, location, brand, color, category, occasion, size, fitType,
             image: result.url,
             imageFileId: result.fileId,
             owner: req.session.userId,
             rentalStatus: "available"
         })
+
+        // console.log(listing);
 
         res.redirect("/listings");
     } catch (err) {
@@ -122,11 +152,14 @@ module.exports.applyEditedListing = async (req, res, next) => {
         }
 
         // Verify ownership - only owner or admin can edit
-        if (!listing.owner || (listing.owner.toString() !== req.session.userId.toString() && req.session.role !== "admin")) {
+        const isAdmin = req.session.role === "admin";
+        const isOwner = listing.owner && listing.owner.toString() === req.session.userId.toString();
+        if (!isAdmin && !isOwner) {
             throw new ExpressError("Unauthorized - You do not own this listing", 403);
         }
 
-        const updateData = { ...req.body.listing };
+        const { title, description, pricePerDay, location, brand, color, category, occasion, size, fitType } = req.body.listing;
+        const updateData = { title, description, pricePerDay, location, brand, color, category, occasion, size, fitType };
 
         if (file) {
             if (listing.imageFileId) {
@@ -153,7 +186,6 @@ module.exports.applyEditedListing = async (req, res, next) => {
 }
 
 
-
 module.exports.deleteListing = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -165,7 +197,9 @@ module.exports.deleteListing = async (req, res, next) => {
         }
 
         // Verify ownership - only owner or admin can delete
-        if (!listing.owner || (listing.owner.toString() !== req.session.userId.toString() && req.session.role !== "admin")) {
+        const isAdmin = req.session.role === "admin";
+        const isOwner = listing.owner && listing.owner.toString() === req.session.userId.toString();
+        if (!isAdmin && !isOwner) {
             throw new ExpressError("Unauthorized - You do not own this listing", 403);
         }
 

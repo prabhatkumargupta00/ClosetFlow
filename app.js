@@ -8,6 +8,8 @@ const path = require("path")
 const methodOverride = require("method-override")
 const ejsMate = require("ejs-mate")
 const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+
 
 
 
@@ -30,10 +32,20 @@ app.engine("ejs", ejsMate)
 
 
 
+// Rate Limiting
+app.set("trust proxy", 1);
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    limit: 100, // Limit each IP to 100 requests
+});
+
 // Setup middleware BEFORE routes
+
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")))
+app.use(limiter);
+
 
 // Security headers via Helmet
 // try to fully understand it : how it workd
@@ -75,11 +87,12 @@ app.use(
         resave: false,
         saveUninitialized: false,
         store: MongoStore.create({
-            mongoUrl: process.env.MONGO_URL,
+            mongoUrl: process.env.MONGO_URI,
             touchAfter: 24 * 3600, // only update session once per day (seconds)
         }),
         cookie: {
             // keep session cookie for 1 day (ms)
+            secure: process.env.NODE_ENV === "production",
             maxAge: 1000 * 60 * 60 * 24,
             httpOnly: true,
             sameSite: 'Lax',
@@ -101,9 +114,9 @@ app.use((req, res, next) => {
 // });
 
 // Routes
-// Root route redirect
+// Root route
 app.get("/", (req, res) => {
-    res.redirect("/listings");
+    res.render("home.ejs");
 });
 
 // user routes goes here
@@ -128,11 +141,18 @@ main()
         console.log("Connected to database")
     })
     .catch((err) => {
-        console.log(err)
+        console.error("Database connection error:", err.message);
+        if (err.code === 'ECONNREFUSED' && err.syscall === 'querySrv') {
+            console.error("TIP: This error often happens due to DNS SRV resolution issues or if your IP is not whitelisted in MongoDB Atlas.");
+        }
     });
 
 async function main() {
-    await mongoose.connect(process.env.MONGO_URL)
+    const connectionOptions = {
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 45000,
+    };
+    await mongoose.connect(process.env.MONGO_URI, connectionOptions);
 }
 
 // 404 handler - must be after all other routes

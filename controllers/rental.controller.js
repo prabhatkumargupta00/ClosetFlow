@@ -66,6 +66,7 @@ module.exports.rentListing = async (req, res, next) => {
             user: req.session.userId,
             rentalPeriod: { start: startDate, end: endDate },
             price,
+            size
         });
 
         await rental.save();

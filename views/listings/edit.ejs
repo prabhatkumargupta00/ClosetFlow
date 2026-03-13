@@ -1,10 +1,10 @@
 <% layout("/layouts/boilerplate.ejs") -%>
 
     <div class="mx-auto mt-10 mb-12 w-full max-w-3xl px-4">
-        <div class="rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div class="rounded-2xl border border-white/20 bg-linear-to-br! from-indigo-300/60 to-red-300/60 backdrop-blur-xl shadow-2xl overflow-hidden">
             <div class="p-6 md:p-8">
 
-                <h2 class="mb-6 text-center text-xl font-semibold tracking-wide text-slate-900">
+                <h2 class="mb-6 text-center text-2xl font-black text-white uppercase tracking-widest">
                     Edit Product
                 </h2>
 
@@ -12,69 +12,69 @@
 
                     <!-- Title -->
                     <div>
-                        <label class="mb-1 block text-sm font-medium text-slate-700">Title</label>
+                        <label class="mb-2 block text-xs font-black text-white uppercase tracking-wider">Title</label>
                         <input type="text" name="listing[title]" value="<%= listing.title %>" required
-                            class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
+                            class="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-white/40 focus:bg-white/20 transition-all shadow-inner" />
                     </div>
 
                     <!-- Description -->
                     <div>
-                        <label class="mb-1 block text-sm font-medium text-slate-700">Description</label>
+                        <label class="mb-2 block text-xs font-black text-white uppercase tracking-wider">Description</label>
                         <textarea name="listing[description]" rows="3"
-                            class="w-full resize-none rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900"><%= listing.description %></textarea>
+                            class="w-full resize-none rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-white/40 focus:bg-white/20 transition-all shadow-inner"><%= listing.description %></textarea>
                     </div>
 
                     <!-- Image -->
                     <div>
-                        <label class="mb-1 block text-sm font-medium text-slate-700">Upload Image</label>
-                        <div class="mb-2">
-                            <p class="text-sm text-slate-600">Current image:</p>
-                            <img src="<%= listing.image %>" alt="Current image" class="w-32 h-40 object-cover rounded-md border" />
+                        <label class="mb-2 block text-xs font-black text-white uppercase tracking-wider">Upload Image</label>
+                        <div class="mb-4">
+                            <p class="mb-2 text-xs font-bold text-white/60">Current image:</p>
+                            <img src="<%= listing.image %>" alt="Current image" class="w-32 h-40 object-cover rounded-xl border border-white/20 shadow-lg" />
                         </div>
                         <input type="file" name="image" accept="image/*"
-                            class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
+                            class="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-2 text-sm text-white outline-none file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-black file:uppercase file:bg-white file:text-indigo-600 file:hover:bg-indigo-50 transition-all cursor-pointer" />
                     </div>
 
                     <!-- Price & Location -->
-                    <div class="grid gap-5 md:grid-cols-2">
+                    <div class="grid gap-6 md:grid-cols-2">
                         <div>
-                            <label class="mb-1 block text-sm font-medium text-slate-700">Price Per Day (₹)</label>
+                            <label class="mb-2 block text-xs font-black text-white uppercase tracking-wider">Price Per Day (₹)</label>
                             <input type="number" name="listing[pricePerDay]" value="<%= listing.pricePerDay %>" required
-                                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
+                                class="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none focus:border-white/40 focus:bg-white/20 transition-all shadow-inner" />
                         </div>
 
                         <div>
-                            <label class="mb-1 block text-sm font-medium text-slate-700">Location</label>
+                            <label class="mb-2 block text-xs font-black text-white uppercase tracking-wider">Location</label>
                             <input type="text" name="listing[location]" value="<%= listing.location %>" required
-                                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
+                                class="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none focus:border-white/40 focus:bg-white/20 transition-all shadow-inner" />
                         </div>
                     </div>
 
-                    <!-- Brand & Color (Schema-added) -->
-                    <div class="grid gap-5 md:grid-cols-2">
+                    <!-- Brand & Color -->
+                    <div class="grid gap-6 md:grid-cols-2">
                         <div>
-                            <label class="mb-1 block text-sm font-medium text-slate-700">Brand</label>
+                            <label class="mb-2 block text-xs font-black text-white uppercase tracking-wider">Brand</label>
                             <input type="text" name="listing[brand]" value="<%= listing.brand || '' %>"
-                                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
+                                class="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-white/40 focus:bg-white/20 transition-all shadow-inner" />
                         </div>
 
                         <div>
-                            <label class="mb-1 block text-sm font-medium text-slate-700">Color</label>
+                            <label class="mb-2 block text-xs font-black text-white uppercase tracking-wider">Color</label>
                             <input type="text" name="listing[color]" value="<%= listing.color || '' %>"
-                                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
+                                class="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-white/40 focus:bg-white/20 transition-all shadow-inner" />
                         </div>
                     </div>
 
                     <!-- Category & Occasion -->
-                    <div class="grid gap-5 md:grid-cols-2">
+                    <div class="grid gap-6 md:grid-cols-2">
                         <div>
-                            <label class="mb-1 block text-sm font-medium text-slate-700">Category</label>
+                            <label class="mb-2 block text-xs font-black text-white uppercase tracking-wider">Category</label>
                             <select name="listing[category]"
-                                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900">
-                                <option value="" <%= !listing.category ? "selected" : "" %>>None</option>
+                                class="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none focus:border-white/40 focus:bg-white/20 transition-all cursor-pointer shadow-inner appearance-none">
+                                <option value="" <%= !listing.category ? "selected" : "" %> class="bg-indigo-600">None</option>
                                 <% ["Lehenga","Kurta Pajama","Sherwani","Anarkali","Suit","Bandhgala"].forEach(cat=> {
                                     %>
-                                    <option value="<%= cat %>" <%=listing.category===cat ? "selected" : "" %>>
+                                    <option value="<%= cat %>" <%=listing.category===cat ? "selected" : "" %> class="bg-indigo-600">
                                         <%= cat %>
                                     </option>
                                     <% }) %>
@@ -82,12 +82,12 @@
                         </div>
 
                         <div>
-                            <label class="mb-1 block text-sm font-medium text-slate-700">Occasion</label>
+                            <label class="mb-2 block text-xs font-black text-white uppercase tracking-wider">Occasion</label>
                             <select name="listing[occasion]"
-                                class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900">
-                                <option value="" <%= !listing.occasion ? "selected" : "" %>>None</option>
+                                class="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none focus:border-white/40 focus:bg-white/20 transition-all cursor-pointer shadow-inner appearance-none">
+                                <option value="" <%= !listing.occasion ? "selected" : "" %> class="bg-indigo-600">None</option>
                                 <% ["Wedding","Reception","Festive","Corporate","Formal"].forEach(occ=> { %>
-                                    <option value="<%= occ %>" <%=listing.occasion===occ ? "selected" : "" %>>
+                                    <option value="<%= occ %>" <%=listing.occasion===occ ? "selected" : "" %> class="bg-indigo-600">
                                         <%= occ %>
                                     </option>
                                     <% }) %>
@@ -97,15 +97,15 @@
 
                     <!-- Sizes -->
                     <div>
-                        <label class="mb-2 block text-sm font-medium text-slate-700">Available Sizes</label>
-                        <div class="flex flex-wrap gap-4">
+                        <label class="mb-4 block text-xs font-black text-white uppercase tracking-wider">Available Sizes</label>
+                        <div class="flex flex-wrap gap-6">
                             <% ["S","M","L","XL"].forEach(s=> { %>
-                                <label class="inline-flex items-center gap-2 text-sm text-slate-700">
+                                <label class="inline-flex items-center gap-2 cursor-pointer group">
                                     <input type="checkbox" name="listing[size]" value="<%= s %>"
                                         <%=listing.size.includes(s) ? "checked" : "" %>
-                                    class="rounded border-slate-300 text-slate-900 focus:ring-0"
+                                    class="w-5 h-5 rounded-md border-white/20 bg-white/10 text-indigo-500 focus:ring-0 cursor-pointer transition-all group-hover:bg-white/20"
                                     />
-                                    <%= s %>
+                                    <span class="text-sm font-bold text-white tracking-widest"><%= s %></span>
                                 </label>
                                 <% }) %>
                         </div>
@@ -113,11 +113,11 @@
 
                     <!-- Fit Type -->
                     <div>
-                        <label class="mb-1 block text-sm font-medium text-slate-700">Fit Type</label>
+                        <label class="mb-2 block text-xs font-black text-white uppercase tracking-wider">Fit Type</label>
                         <select name="listing[fitType]"
-                            class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900">
+                            class="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none focus:border-white/40 focus:bg-white/20 transition-all cursor-pointer shadow-inner appearance-none">
                             <% ["Slim","Regular","Relaxed","Oversized","Tailored"].forEach(fit=> { %>
-                                <option value="<%= fit %>" <%=listing.fitType===fit ? "selected" : "" %>>
+                                <option value="<%= fit %>" <%=listing.fitType===fit ? "selected" : "" %> class="bg-indigo-600">
                                     <%= fit %>
                                 </option>
                                 <% }) %>
@@ -126,16 +126,16 @@
 
                     <!-- Rating -->
                     <div>
-                        <label class="mb-1 block text-sm font-medium text-slate-700">Rating</label>
+                        <label class="mb-2 block text-xs font-black text-white uppercase tracking-wider">Rating</label>
                         <input type="number" step="0.1" min="0" max="5" name="listing[rating]"
                             value="<%= listing.rating %>"
-                            class="w-full rounded-md border border-slate-200 px-4 py-2 text-sm outline-none focus:border-slate-900" />
+                            class="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white outline-none focus:border-white/40 focus:bg-white/20 transition-all shadow-inner" />
                     </div>
 
                     <!-- Submit -->
-                    <div class="pt-4">
+                    <div class="pt-6">
                         <button type="submit"
-                            class="w-full rounded-md! bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-950">
+                            class="w-full rounded-full! bg-linear-to-r from-white to-white/90 px-6 py-4 text-sm font-black text-indigo-950 uppercase tracking-widest transition shadow-2xl hover:scale-[1.02] active:scale-95 hover:shadow-white/20">
                             Update Product
                         </button>
                     </div>

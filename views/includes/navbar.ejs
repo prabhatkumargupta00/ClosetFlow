@@ -1,5 +1,5 @@
-<nav class="sticky top-0 z-50 bg-slate-900/95 text-white shadow-sm backdrop-blur">
-    <div class="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3">
+<nav class="sticky top-0 z-50 bg-indigo-950/95 text-white shadow-sm backdrop-blur">
+    <div class="mx-auto flex max-w-7xl items-center justify-between  gap-3 px-4 py-3">
 
         <!-- Brand -->
         <a href="/" class="flex items-center gap-2 text-xl md:text-2xl font-semibold no-underline text-white">
@@ -17,25 +17,16 @@
                 <% } %>
         </div>
 
-        <!-- Search -->
-        <form class="ml-auto flex items-center gap-2" action="/listings" method="GET">
-            <input type="search" name="q" value="<%= typeof q !== 'undefined' ? q : '' %>" placeholder="Search outfits"
-                class="w-56 rounded-md border border-white/15 bg-white/10 px-3 py-2 text-sm text-white placeholder:text-white/60 outline-none focus:border-white/30 focus:bg-white/15" />
-            <button type="submit"
-                class="rounded-md! border border-white/20 px-3 py-2 text-sm font-medium hover:bg-white/10">
-                Search
-            </button>
-        </form>
 
         <!-- Auth / Dropdown -->
-        <div class="ml-4 hidden items-center md:flex">
+        <div class="ml-auto hidden items-center md:flex">
             <% if (!currentUser) { %>
                 <a href="/login"
                     class="rounded-md! border border-white/20 px-3 py-2 text-sm font-medium no-underline hover:bg-white/10">
                     Login
                 </a>
                 <a href="/register"
-                    class="ml-2 rounded-md! bg-white px-3 py-2 text-sm font-semibold text-slate-900 no-underline hover:bg-white/90">
+                    class="ml-2 rounded-md! bg-white px-3 py-2 text-sm font-semibold text-indigo-950 no-underline hover:bg-white/90">
                     Register
                 </a>
                 <% } else { %>
@@ -50,7 +41,7 @@
                         </button>
 
                         <div id="userMenu"
-                            class="absolute h-fit mt-4 w-52 hidden rounded-md! border bg-slate-900 shadow-lg">
+                            class="absolute h-fit mt-4 w-52 hidden rounded-md! border border-indigo-800/50 bg-indigo-950 shadow-lg">
                             <a href="/profile"
                                 class="block px-5 py-2 text-nowrap text-md border-b border-slate-800/50 hover:bg-white/10 no-underline text-white">
                                 <i class="fa-solid fa-user mr-2"></i>My Profile
@@ -97,12 +88,12 @@
         <button type="button"
             class="ml-2 inline-flex items-center justify-center rounded-md! p-2 text-white hover:bg-white/10 md:hidden"
             onclick="document.getElementById('mobileNav').classList.toggle('hidden')">
-            
+            <i class="fa-solid fa-bars"></i>
         </button>
     </div>
 
     <!-- Mobile Menu -->
-    <div id="mobileNav" class="hidden border-t border-white/10 bg-slate-900 md:hidden">
+    <div id="mobileNav" class="hidden border-t border-white/10 bg-indigo-950 md:hidden">
         <div class="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-3">
 
             <% if (currentUserRole==="admin" ) { %>
@@ -126,11 +117,11 @@
                             </button>
                         </form>
                         <% } else { %>
-                            <a href="/login" class="px-3 py-2 text-sm bg-white text-slate-900 font-semibold rounded-md! no-underline">
+                            <a href="/login" class="px-3 py-2 text-sm bg-white text-indigo-950 font-semibold rounded-md! no-underline">
                                 Login
                             </a>
                             <a href="/register"
-                                class="px-3 py-2 text-sm bg-white text-slate-900 font-semibold rounded-md! no-underline">
+                                class="px-3 py-2 text-sm bg-white text-indigo-950 font-semibold rounded-md! no-underline">
                                 Register
                             </a>
                             <% } %>

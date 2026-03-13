@@ -50,6 +50,6 @@ router.put("/:id", isLoggedIn, isAdmin, upload.single("image"), validate(listing
 
 
 // DELETE – remove listing
-router.delete("/:id", isLoggedIn, isAdmin, deleteListing);
+router.delete("/:id", isLoggedIn, deleteListing);
 
 module.exports = router;

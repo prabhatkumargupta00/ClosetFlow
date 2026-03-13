@@ -3,105 +3,133 @@
 <div class="container mx-auto mt-8 max-w-4xl px-4 pb-16">
 
     <!-- Header Section -->
-    <div class="bg-white border rounded-lg p-8 flex flex-col items-center text-center shadow-sm">
-        
-        <div>
-            <h1 class="text-3xl font-bold text-gray-900"><%= user.username %></h1>
-            <span class="inline-block mt-2 px-3 py-1 bg-gray-100 text-gray-700 text-xs font-semibold rounded-full uppercase tracking-wide border border-gray-200">
+    <div class="bg-indigo-500/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 flex flex-col items-center text-center shadow-2xl relative overflow-hidden">
+        <div class="relative z-10">
+            <div class="w-24 h-24 bg-linear-to-br from-indigo-500 to-indigo-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white shadow-lg border-2 border-white/20">
+                <span class="text-3xl font-black uppercase"><%= user.username.charAt(0) %></span>
+            </div>
+            <h1 class="text-3xl font-black text-white m-0 tracking-tight"><%= user.username %></h1>
+            <span class="inline-block mt-3 px-4 py-1.5 bg-indigo-500/20 text-indigo-100 text-[10px] font-black uppercase tracking-widest rounded-full border border-indigo-400/30">
                 <%= user.role %>
             </span>
-            <div class="text-gray-500 mt-4 space-y-1.5 text-sm flex flex-col items-center">
-                <p class="flex items-center"><i class="fa-solid fa-envelope w-5 mr-1"></i><%= user.email %></p>
-                <p class="flex items-center"><i class="fa-regular fa-calendar w-5 mr-1"></i>Joined <%= user.createdAt.toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }) %></p>
+            <div class="text-white/70 mt-5 space-y-2 text-sm font-medium flex flex-col items-center">
+                <p class="flex items-center gap-2 bg-white/5 px-4 py-1.5 rounded-full border border-white/5 shadow-inner">
+                    <i class="fa-solid fa-envelope text-indigo-400"></i> <%= user.email %>
+                </p>
+                <p class="flex items-center gap-2">
+                    <i class="fa-regular fa-calendar text-white/40"></i> 
+                    <span class="text-xs uppercase tracking-wider font-black opacity-40">Joined</span> 
+                    <%= user.createdAt.toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+                </p>
             </div>
         </div>
         
-        <div class="flex flex-row justify-center gap-3 mt-6">
-            <a href="/my-rentals" class="px-6 py-2.5 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition text-sm font-medium no-underline">
-                View My Rentals
+        <div class="flex flex-row justify-center gap-3 mt-8 relative z-10 w-full max-w-xs">
+            <a href="/my-rentals" class="flex-1 px-6 py-3 bg-linear-to-r from-indigo-600 to-indigo-500 text-white text-xs font-black uppercase tracking-widest rounded-full transition shadow-lg shadow-black/20 hover:scale-105 hover:shadow-indigo-500/40 active:scale-95 no-underline">
+                My Rentals
             </a>
             <% if (user.role === 'admin') { %>
-            <a href="/admin/dashboard" class="px-6 py-2.5 bg-yellow-400 text-yellow-900 rounded-lg hover:bg-yellow-500 transition text-sm font-medium no-underline">
+            <a href="/admin/dashboard" class="flex-1 px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-black uppercase tracking-widest rounded-full transition hover:bg-white/20 active:scale-95 no-underline">
                 Admin Panel
             </a>
             <% } %>
         </div>
     </div>
 
-
-
-
     <!-- Admin Links -->
     <% if (user.role === 'admin') { %>
-    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-5 mt-6 shadow-sm">
-        <h2 class="text-sm font-bold text-yellow-800 uppercase tracking-wider mb-3">Admin Quick Links</h2>
-        <div class="flex flex-wrap gap-2">
-            <a href="/admin/listings" class="px-4 py-2 bg-white border border-yellow-300 text-yellow-800 rounded-lg hover:bg-yellow-100 transition text-sm font-medium no-underline">Manage Listings</a>
-            <a href="/admin/rentals" class="px-4 py-2 bg-white border border-yellow-300 text-yellow-800 rounded-lg hover:bg-yellow-100 transition text-sm font-medium no-underline">All Rentals</a>
-            <a href="/listings/new" class="px-4 py-2 bg-white border border-yellow-300 text-yellow-800 rounded-lg hover:bg-yellow-100 transition text-sm font-medium no-underline">Add New Listing</a>
+    <div class="bg-indigo-500/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 mt-8 shadow-2xl">
+        <div class="flex items-center gap-3 mb-5">
+            <div class="w-8 h-8 bg-indigo-500/20 rounded-lg flex items-center justify-center">
+                <i class="fa-solid fa-bolt text-indigo-400 text-sm"></i>
+            </div>
+            <h2 class="text-xs font-black text-white uppercase tracking-widest m-0">Admin Quick Links</h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <a href="/admin/listings" class="group flex items-center justify-between px-5 py-3 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:border-indigo-400/30 transition-all duration-300 no-underline text-white">
+                <span class="text-[11px] font-black uppercase tracking-widest">Manage Listings</span>
+                <i class="fa-solid fa-chevron-right text-indigo-400 group-hover:translate-x-1 transition-transform"></i>
+            </a>
+            <a href="/admin/rentals" class="group flex items-center justify-between px-5 py-3 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:border-indigo-400/30 transition-all duration-300 no-underline text-white">
+                <span class="text-[11px] font-black uppercase tracking-widest">All Rentals</span>
+                <i class="fa-solid fa-chevron-right text-indigo-400 group-hover:translate-x-1 transition-transform"></i>
+            </a>
+            <a href="/listings/new" class="group flex items-center justify-between px-5 py-3 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:border-indigo-400/30 transition-all duration-300 no-underline text-white">
+                <span class="text-[11px] font-black uppercase tracking-widest">Add New Listing</span>
+                <i class="fa-solid fa-plus text-indigo-400 group-hover:rotate-90 transition-transform"></i>
+            </a>
         </div>
     </div>
     <% } %>
 
     <!-- Recent Rentals -->
-    <div class="flex justify-between items-center mt-10 mb-5">
-        <h2 class="text-xl font-bold text-gray-900">Recent Rentals</h2>
+    <div class="flex justify-between items-center mt-12 mb-6">
+        <h2 class="text-lg font-black text-white uppercase tracking-widest m-0 flex items-center gap-3">
+            <span class="w-1.5 h-6 bg-indigo-500 rounded-full"></span>
+            Recent Rentals
+        </h2>
         <% if (recentRentals.length > 0) { %>
-            <a href="/my-rentals" class="text-sm font-medium text-blue-600 hover:text-blue-800 no-underline">View All</a>
+            <a href="/my-rentals" class="text-[10px] font-black uppercase tracking-widest text-indigo-400 hover:text-indigo-300 no-underline transition-colors">View All History →</a>
         <% } %>
     </div>
     
     <% if (recentRentals.length === 0) { %>
-        <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-10 text-center shadow-sm max-w-2xl mx-auto my-6">
-            <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white shadow-sm mb-6">
-                <i class="fa-solid fa-bag-shopping text-3xl text-indigo-400"></i>
+        <div class="bg-indigo-500/10 backdrop-blur-md border border-white/20 rounded-2xl p-12 text-center shadow-2xl max-w-2xl mx-auto my-6">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-white/5 border border-white/10 shadow-inner mb-6">
+                <i class="fa-solid fa-bag-shopping text-3xl text-white/20"></i>
             </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2">No rentals yet</h3>
-            <p class="text-gray-600 mb-8 max-w-sm mx-auto">You haven't rented any outfits yet. Start exploring our premium collection and rent your first outfit today!</p>
+            <h3 class="text-xl font-bold text-white mb-2">No rentals yet</h3>
+            <p class="text-white/60 mb-8 max-w-sm mx-auto text-sm leading-relaxed">You haven't rented any outfits yet. Start exploring our premium collection and rent your first outfit today!</p>
             <div class="pb-2">
-                <a href="/listings" class="inline-block bg-indigo-600 text-white font-medium px-6 py-2 rounded-lg hover:bg-indigo-700 transition shadow-sm no-underline">
+                <a href="/listings" class="inline-block px-8 py-3 bg-linear-to-r from-indigo-600 to-indigo-500 text-white text-xs font-black uppercase tracking-widest rounded-full transition shadow-lg shadow-black/20 hover:scale-105 hover:shadow-indigo-500/40 active:scale-95 no-underline">
                     Browse Outfits
                 </a>
             </div>
         </div>
     <% } else { %>
-        <div class="grid gap-4 grid-cols-2">
+        <div class="grid gap-5 grid-cols-1 md:grid-cols-2">
             <% recentRentals.forEach(rental => { %>
-                <div class="bg-white border rounded-lg flex overflow-hidden shadow-sm hover:shadow-md transition">
+                <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl flex overflow-hidden shadow-xl hover:shadow-indigo-500/10 hover:border-white/20 transition-all duration-300 group">
                     <% if (rental.listing && rental.listing.image) { %>
-                        <div class="w-32 bg-gray-100 shrink-0">
-                            <img src="<%= rental.listing.image %>" alt="<%= rental.listing.title %>" class="w-full h-full object-cover">
+                        <div class="w-28 bg-white/5 shrink-0 relative overflow-hidden">
+                            <img src="<%= rental.listing.image %>" alt="<%= rental.listing.title %>" class="w-full h-full object-cover grayscale-20 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-500">
+                            <div class="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"></div>
                         </div>
                     <% } else { %>
-                        <div class="w-32 bg-gray-100 flex items-center justify-center text-gray-300 shrink-0">
-                            <i class="fa-solid fa-image text-2xl"></i>
+                        <div class="w-28 bg-white/5 flex items-center justify-center text-white/20 shrink-0 border-r border-white/5">
+                            <i class="fa-solid fa-image text-xl"></i>
                         </div>
                     <% } %>
                     
-                    <div class="p-4 flex-1 flex flex-col justify-center">
-                        <div class="flex justify-between items-start gap-2">
-                            <h4 class="font-bold text-gray-900 truncate">
+                    <div class="p-5 flex-1 flex flex-col justify-center">
+                        <div class="flex justify-between items-start gap-2 mb-1">
+                            <h4 class="font-bold text-white mb-0 truncate text-sm">
                                 <% if (rental.listing) { %>
-                                    <a href="/listings/<%= rental.listing._id %>" class="no-underline text-gray-900 hover:text-blue-600"><%= rental.listing.title %></a>
+                                    <a href="/listings/<%= rental.listing._id %>" class="no-underline text-white hover:text-indigo-400 transition-colors"><%= rental.listing.title %></a>
                                 <% } else { %>
-                                    <span class="text-gray-500">Deleted Item</span>
+                                    <span class="text-white/30 italic font-medium">Deleted Item</span>
                                 <% } %>
                             </h4>
                             <% if (rental.status === 'completed') { %>
-                                <span class="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded font-medium shrink-0">Done</span>
+                                <span class="bg-emerald-400/20 text-emerald-400 text-[9px] px-2 py-0.5 rounded-full font-black uppercase tracking-wider border border-emerald-400/30">Done</span>
                             <% } else { %>
-                                <span class="bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded font-medium shrink-0">Active</span>
+                                <span class="bg-indigo-400/20 text-indigo-100 text-[9px] px-2 py-0.5 rounded-full font-black uppercase tracking-wider border border-indigo-400/30">Active</span>
                             <% } %>
                         </div>
-                        <p class="text-sm text-gray-500 mt-1">
+                        <p class="text-[11px] font-bold text-white/50 m-0 uppercase tracking-widest">
                             <%= rental.rentalPeriod.start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }) %> - 
                             <%= rental.rentalPeriod.end.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }) %>
                         </p>
-                        <p class="font-bold text-gray-900 mt-2">₹<%= rental.price.toLocaleString("en-IN") %></p>
+                        <div class="mt-4 flex items-center justify-between">
+                            <p class="font-black text-white m-0 text-sm font-mono">₹<%= rental.price.toLocaleString("en-IN") %></p>
+                            <i class="fa-solid fa-arrow-right text-white/0 group-hover:text-indigo-400 group-hover:translate-x-1 transition-all duration-300"></i>
+                        </div>
                     </div>
                 </div>
             <% }) %>
         </div>
     <% } %>
+
+</div>
 
 </div>

@@ -1,72 +1,88 @@
 <% layout("/layouts/boilerplate.ejs") -%>
 
 <div class="flex justify-center mt-10">
-    <div class="w-full max-w-md shadow-xl rounded-lg p-8">
-        <h3 class="text-2xl font-semibold text-gray-800">
-            Rent: <%= listing.title %>
-        </h3>
-        <p class="text-lg text-gray-600 mt-2">
-            Price per day: ₹<%= listing.pricePerDay %>
-        </p>
+    <div class="w-full max-w-md rounded-3xl border border-white/20 bg-linear-to-br! from-indigo-300/60 to-red-300/60 backdrop-blur-xl p-8 md:p-10 shadow-2xl">
+        
+        <div class="mb-10 text-center">
+            <h3 class="text-3xl font-black text-white uppercase tracking-tighter leading-none mb-4">
+                Rent: <%= listing.title %>
+            </h3>
+            <div class="inline-flex items-center justify-center px-6 h-10 rounded-full bg-white/10 border border-white/20">
+                <span class="text-sm font-black text-white uppercase tracking-widest leading-none">
+                    ₹<%= listing.pricePerDay.toLocaleString("en-IN") %>
+                </span>
+                <span class="ml-2 text-[10px] font-black uppercase tracking-widest text-white/40 leading-none">/ Day</span>
+            </div>
+        </div>
 
         <form
             action="/rentals/<%= listing._id %>/rent"
             method="POST"
-            class="mt-6 space-y-6"
+            class="space-y-8"
         >
-            <div>
+            <div class="group">
                 <label
                     for="startDate"
-                    class="block ml-1 text-md font-medium text-gray-700"
+                    class="block text-sm font-black text-white uppercase tracking-[0.2em] mb-2 ml-1"
                     >Start Date</label
                 >
                 <input
                     type="date"
-                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    class="block w-full rounded-xl border border-white/20 bg-white/10 px-2 py-3 text-sm text-white focus:border-white/40 focus:bg-white/20 focus:outline-none transition-all shadow-inner"
+                    id="startDate"
                     name="start"
                     min="<%= new Date().toISOString().split('T')[0] %>"
                     required
                 />
             </div>
 
-            <div>
+            <div class="group">
                 <label
                     for="endDate"
-                    class="block ml-1 text-md font-medium text-gray-700"
+                    class="block text-sm font-black text-white uppercase tracking-[0.2em] mb-2 ml-1"
                     >End Date</label
                 >
                 <input
                     type="date"
-                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    class="block w-full rounded-xl border border-white/20 bg-white/10 px-2 py-3 text-sm text-white focus:border-white/40 focus:bg-white/20 focus:outline-none transition-all shadow-inner"
+                    id="endDate"
                     name="end"
                     required
                 />
             </div>
 
-            <div>
+            <div class="group">
                 <label
                     for="size"
-                    class="block ml-1 text-md font-medium text-gray-700"
-                    >Size</label
+                    class="block text-sm font-black text-white uppercase tracking-[0.2em] mb-2 ml-1"
+                    >Preferred Size</label
                 >
-                <select
-                    name="size"
-                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    required
-                >
-                    <option value="">Select size</option>
-                    <% listing.size.forEach(s => { %>
-                        <option value="<%= s %>"><%= s %></option>
-                    <% }) %>
-                </select>
+                <div class="relative">
+                    <select
+                        name="size"
+                        id="size"
+                        class="block w-full appearance-none rounded-xl border border-white/20 bg-white/10 px-2 py-3 text-sm text-white focus:border-white/40 focus:bg-white/20 focus:outline-none transition-all shadow-inner cursor-pointer"
+                        required
+                    >
+                        <option value="" disabled selected class="bg-indigo-900">Select size</option>
+                        <% listing.size.forEach(s => { %>
+                            <option value="<%= s %>" class="bg-indigo-900 text-white"><%= s %></option>
+                        <% }) %>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-5 flex items-center text-white/40">
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </div>
+                </div>
             </div>
 
-            <button
-                type="submit"
-                class="mt-1 text-white block bg-success w-full px-4 py-2 border border-gray-300 rounded-lg! shadow-md font-semibold"
-            >
-                Confirm Rent
-            </button>
+            <div class="pt-4">
+                <button
+                    type="submit"
+                    class="w-full rounded-full! bg-white px-4 py-3 text-sm font-black text-indigo-950 uppercase tracking-[0.3em] shadow-2xl transition-all hover:scale-[1.02] hover:shadow-white/20 active:scale-95 cursor-pointer"
+                >
+                    Confirm Rent
+                </button>
+            </div>
         </form>
     </div>
 </div>

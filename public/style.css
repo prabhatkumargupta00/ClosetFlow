@@ -126,7 +126,22 @@ a {
 } */
 
 body {
-    background-color: #f8f9fa !important;
+    background-color: #020617 !important;
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+    /* Responsive Grid Background */
+    background-image: 
+        linear-gradient(rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+    background-size: 30px 30px;
+    background-attachment: fixed;
+}
+
+@media (min-width: 768px) {
+    body {
+        background-size: 50px 50px;
+    }
 }
 #how-it-works {
     scroll-margin-top: 60px !important;
