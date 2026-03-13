@@ -3,10 +3,11 @@
     "version": "1.0.0",
     "main": "app.js",
     "scripts": {
-        "start": "npm run build:css && node app.js",
+        "start": "node app.js",
         "build": "npm run build:css",
         "build:css": "tailwindcss -i ./tailwind.css -o ./public/tailwind.css",
         "watch:css": "tailwindcss -i ./tailwind.css -o ./public/tailwind.css --watch",
+        "dev": "npm run build:css && node app.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
@@ -15,6 +16,7 @@
     "description": "",
     "dependencies": {
         "@imagekit/nodejs": "^7.3.0",
+        "@tailwindcss/cli": "^4.1.18",
         "bcrypt": "^6.0.0",
         "connect-mongo": "^6.0.0",
         "dotenv": "^17.2.4",
@@ -27,12 +29,11 @@
         "joi": "^18.0.2",
         "method-override": "^3.0.0",
         "mongoose": "^8.16.4",
-        "multer": "^2.0.2"
+        "multer": "^2.0.2",
+        "tailwindcss": "^4.1.18"
     },
     "devDependencies": {
-        "@tailwindcss/cli": "^4.1.18",
         "autoprefixer": "^10.4.24",
-        "postcss": "^8.5.6",
-        "tailwindcss": "^4.1.18"
+        "postcss": "^8.5.6"
     }
 }
