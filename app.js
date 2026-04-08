@@ -33,17 +33,19 @@ app.engine("ejs", ejsMate)
 
 
 // Rate Limiting
-app.set("trust proxy", 1);
+app.set("trust proxy", true);
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    limit: 100, // Limit each IP to 100 requests
+    limit: 500, // Increased limit to ensure health checks pass
+    standardHeaders: true,
+    legacyHeaders: false,
 });
 
 // Setup middleware BEFORE routes
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
-app.use(express.static(path.join(__dirname, "/public")))
+app.use(express.static(path.join(__dirname, "public")))
 app.use(limiter);
 
 
@@ -51,33 +53,7 @@ app.use(limiter);
 // try to fully understand it : how it workd
 app.use(
     helmet({
-        contentSecurityPolicy: {
-            directives: {
-                defaultSrc: ["'self'"],
-                scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
-                styleSrc: [
-                    "'self'",
-                    "'unsafe-inline'",
-                    "https://cdn.jsdelivr.net",
-                    "https://cdnjs.cloudflare.com",
-                    "https://fonts.googleapis.com",
-                ],
-                fontSrc: [
-                    "'self'",
-                    "https://fonts.gstatic.com",
-                    "https://cdnjs.cloudflare.com",
-                ],
-                imgSrc: [
-                    "'self'",
-                    "data:",
-                    "https://ik.imagekit.io",
-                    "https://images.unsplash.com",
-                ],
-                connectSrc: ["'self'", "https://cdn.jsdelivr.net", "https://ik.imagekit.io"],
-                scriptSrcAttr: ["'unsafe-inline'"],
-                formAction: ["'self'"],
-            },
-        },
+        contentSecurityPolicy: false, // Disable temporarily to confirm if it's causing issues
     })
 );
 
