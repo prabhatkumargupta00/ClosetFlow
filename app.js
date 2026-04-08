@@ -39,6 +39,7 @@ const limiter = rateLimit({
     limit: 500, // Increased limit to ensure health checks pass
     standardHeaders: true,
     legacyHeaders: false,
+    validate: { trustProxy: false },
 });
 
 // Setup middleware BEFORE routes
