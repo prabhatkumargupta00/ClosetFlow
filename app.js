@@ -96,6 +96,11 @@ app.get("/", (req, res) => {
     res.render("home.ejs");
 });
 
+// Footer routes
+app.get("/contact", (req, res) => res.render("Footer/contact"));
+app.get("/privacy", (req, res) => res.render("Footer/privacy"));
+app.get("/terms", (req, res) => res.render("Footer/terms"));
+
 // user routes goes here
 app.use("/", userRoutes);
 app.use("/listings", listingRoutes);

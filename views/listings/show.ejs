@@ -6,7 +6,7 @@
       <!-- IMAGE BLOCK -->
       <div class="mb-10 flex justify-center">
         <div class="relative w-full max-w-md aspect-4/5 overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white/20">
-          <img src="<%= listing.image %>" alt="Listing Image" class="h-full w-full object-cover object-top transition-transform duration-500 hover:scale-105" />
+          <img src="<%= listing.image %>" alt="Listing Image" class="h-full w-full object-cover object-top transition duration-500 hover:brightness-75" />
 
           <span
             class="absolute left-6 top-6 rounded-full bg-slate-700/50  px-5 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-white backdrop-blur-3xl shadow-lg">
@@ -107,13 +107,13 @@
         <!-- CTA -->
         <% if (currentUser) { %>
           <a href="/rentals/<%= listing._id %>"
-            class="block w-fit rounded-full! bg-white px-4 py-4 text-sm font-black text-indigo-950 uppercase  shadow-2xl transition-all hover:scale-[1.02] hover:shadow-white/20 text-center no-underline">
-            Rent this masterpiece
+            class="block w-fit rounded-full! bg-white px-5 py-3 text-sm font-black text-indigo-950 uppercase shadow-2xl transition-all hover:brightness-70 hover:shadow-white/20 text-center no-underline">
+            Rent this outfit
           </a>
           <% } else { %>
             <a href="/login"
-              class="block w-fit rounded-full! bg-white px-4 py-4 text-sm font-black text-indigo-950 uppercase  shadow-2xl transition-all hover:scale-[1.02] hover:shadow-white/20  text-center no-underline">
-              Login to experience
+              class="block w-fit rounded-full! bg-white px-4 py-2 text-sm font-black text-indigo-950 uppercase shadow-2xl transition-all hover:brightness-70 hover:shadow-white/20 text-center no-underline">
+              Login to Rent
             </a>
           <% } %>
 
@@ -121,13 +121,13 @@
       <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
         <!-- Edit --> 
         <a href="/listings/<%= listing._id %>/edit"
-          class="inline-flex items-center justify-center w-48 h-12 rounded-full! bg-white text-base font-black uppercase tracking-widest text-indigo-950 transition-all hover:scale-105 active:scale-95 shadow-xl no-underline whitespace-nowrap">
+          class="inline-flex items-center justify-center w-48 h-12 rounded-full! bg-white text-base font-black uppercase tracking-widest text-indigo-950 transition-all hover:brightness-70 active:scale-95 shadow-xl no-underline whitespace-nowrap">
           Edit Details </a> 
         <!-- Delete -->
         <form action="/listings/<%= listing._id %>?_method=DELETE" method="post"
           onsubmit="return confirm('This action cannot be undone. Delete this listing?')"
           class="m-0"> 
-          <button type="submit" class="inline-flex items-center justify-center w-48 h-12 rounded-full! bg-white/10 text-base font-black uppercase tracking-widest text-white transition-all hover:scale-105 active:scale-95 hover:bg-red-500/20 shadow-xl whitespace-nowrap cursor-pointer">
+          <button type="submit" class="inline-flex items-center justify-center w-48 h-12 rounded-full! bg-white/10 text-base font-black uppercase tracking-widest text-white transition-all hover:brightness-70 active:scale-95 hover:bg-red-500/20 shadow-xl whitespace-nowrap cursor-pointer">
             Remove Listing </button> 
         </form>
       </div>
@@ -137,11 +137,11 @@
     </div>
 
 <!-- REVIEWS SECTION -->
-<div class="mt-8 rounded-3xl border border-white/20 bg-linear-to-br! from-indigo-300/60 to-red-300/60 backdrop-blur-xl p-6 md:p-8 shadow-2xl">
+<div class="mt-8 rounded-3xl border border-white/20 bg-linear-to-br! from-indigo-800/60 to-red-800/60 backdrop-blur-xl p-6 md:p-8 shadow-2xl">
 
     <div class="flex items-center mb-10 border-b border-white/20 pb-6">
         <h2 class="text-2xl font-black text-white uppercase tracking-widest">
-            Appraisals
+            Reviews
             <% if (reviews.length > 0) { %>
                 <span class="ml-4 text-sm font-black text-amber-400">★ <%= listing.rating %></span>
                 <span class="text-xs text-white/40 font-bold ml-2">(<%= reviews.length %> review<%= reviews.length !== 1 ? 's' : '' %>)</span>
@@ -152,10 +152,10 @@
     <!-- REVIEW FORM -->
     <% if (currentUser && hasRented && !hasReviewed) { %>
     <div class="mb-12 bg-white/5 rounded-2xl p-6 border border-white/20 backdrop-blur-md">
-        <h3 class="text-xs font-black text-white/50 mb-6 uppercase tracking-[0.2em]">Post an Appraisal</h3>
+        <h3 class="text-xs  text-white/80! mb-6 uppercase">Post a Review</h3>
         <form action="/listings/<%= listing._id %>/reviews" method="POST">
             <div class="mb-8">
-                <label class="block text-[10px] font-black text-white/40 mb-3 uppercase tracking-widest">Rating</label>
+                <label class="block text-[12px] font-black text-white/40 mb-3 uppercase tracking-widest">Rating</label>
                 <div class="flex gap-4" id="star-group">
                     <% [1,2,3,4,5].forEach(star => { %>
                         <label class="cursor-pointer group">
@@ -166,28 +166,28 @@
                 </div>
             </div>
             <div class="mb-8">
-                <label class="block text-[10px] font-black text-white/40 mb-3 uppercase tracking-widest">Your Experience</label>
+                <label class="block text-[12px] font-black text-white/40 mb-3 uppercase tracking-widest">Your Experience</label>
                 <textarea name="comment" rows="3" maxlength="500" required placeholder="Describe the feeling..."
-                    class="w-full rounded-xl border border-white/20 bg-white/5 px-5 py-4 text-sm text-white placeholder:text-white/20 focus:border-white/40 focus:bg-white/10 focus:outline-none transition-all resize-none shadow-inner"></textarea>
+                    class="w-full rounded-xl border border-white/20 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-white/20 focus:border-white/40 focus:bg-white/10 focus:outline-none transition-all resize-none shadow-inner"></textarea>
             </div>
-            <button type="submit" class="rounded-full! bg-white px-10 py-3 text-[10px] font-black text-indigo-950 uppercase tracking-widest transition shadow-xl hover:scale-105 active:scale-95">
-                Submit Appraisal
+            <button type="submit" class="rounded-full! bg-white px-10 py-3 text-[12px] font-black text-indigo-950 uppercase tracking-widest transition shadow-xl hover:brightness-70">
+                Submit Review
             </button>
         </form>
     </div>
     <% } else if (currentUser && hasRented && hasReviewed) { %>
     <div class="mb-10 bg-white/10 border border-white/20 rounded-xl px-6 py-4 text-xs text-white/80 font-black uppercase tracking-widest text-center backdrop-blur">
-        ✓ Appraisal recorded. Thank you for your feedback.
+        ✓ Review recorded. Thank you for your feedback.
     </div>
     <% } else if (currentUser && !hasRented) { %>
     <div class="mb-10 bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-xs text-white/60 font-bold uppercase tracking-widest text-center">
-        Only patrons who have experienced this masterpiece can post an appraisal.
+        Only users who have rented this listing can post a review.
     </div>
     <% } %>
 
     <!-- EXISTING REVIEWS -->
     <% if (reviews.length === 0) { %>
-        <div class="text-center py-16 text-white/80">
+        <div class="text-center py-5 text-white/80">
             <i class="fa-regular fa-comment-dots text-5xl mb-6 block"></i>
             <p class="text-xs font-black uppercase tracking-[0.3em]">No review yet</p>
         </div>
