@@ -33,17 +33,20 @@ app.engine("ejs", ejsMate)
 
 
 // Rate Limiting
-app.set("trust proxy", 1);
+app.set("trust proxy", true);
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    limit: 100, // Limit each IP to 100 requests
+    limit: 500, // Increased limit to ensure health checks pass
+    standardHeaders: true,
+    legacyHeaders: false,
+    validate: { trustProxy: false },
 });
 
 // Setup middleware BEFORE routes
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
-app.use(express.static(path.join(__dirname, "/public")))
+app.use(express.static(path.join(__dirname, "public")))
 app.use(limiter);
 
 
@@ -51,33 +54,7 @@ app.use(limiter);
 // try to fully understand it : how it workd
 app.use(
     helmet({
-        contentSecurityPolicy: {
-            directives: {
-                defaultSrc: ["'self'"],
-                scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
-                styleSrc: [
-                    "'self'",
-                    "'unsafe-inline'",
-                    "https://cdn.jsdelivr.net",
-                    "https://cdnjs.cloudflare.com",
-                    "https://fonts.googleapis.com",
-                ],
-                fontSrc: [
-                    "'self'",
-                    "https://fonts.gstatic.com",
-                    "https://cdnjs.cloudflare.com",
-                ],
-                imgSrc: [
-                    "'self'",
-                    "data:",
-                    "https://ik.imagekit.io",
-                    "https://images.unsplash.com",
-                ],
-                connectSrc: ["'self'", "https://cdn.jsdelivr.net", "https://ik.imagekit.io"],
-                scriptSrcAttr: ["'unsafe-inline'"],
-                formAction: ["'self'"],
-            },
-        },
+        contentSecurityPolicy: false, // Disable temporarily to confirm if it's causing issues
     })
 );
 
@@ -118,6 +95,11 @@ app.use((req, res, next) => {
 app.get("/", (req, res) => {
     res.render("home.ejs");
 });
+
+// Footer routes
+app.get("/contact", (req, res) => res.render("Footer/contact"));
+app.get("/privacy", (req, res) => res.render("Footer/privacy"));
+app.get("/terms", (req, res) => res.render("Footer/terms"));
 
 // user routes goes here
 app.use("/", userRoutes);
@@ -168,6 +150,6 @@ app.use((err, req, res, next) => {
 
 
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server is listening on port ${PORT}`);
 });

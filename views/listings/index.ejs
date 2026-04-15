@@ -18,7 +18,7 @@
                   <% if (sort && sort !=='newest' ) { %><input type="hidden" name="sort" value="<%= sort %>">
                     <% } %>
                       <input type="search" name="q" value="<%= q %>" placeholder="Search outfits..."
-                        class="w-full bg-indigo-500/80 backdrop-blur-md border border-white/20 text-white text-sm font-medium rounded-2xl pl-11 pr-4 py-3 outline-none focus:ring-2 focus:ring-indigo-400/50 focus:bg-indigo-500/90 transition-all placeholder:text-white/40 shadow-lg shadow-black/10" />
+                        class="w-full bg-indigo-500/80 backdrop-blur-md border border-white/20 text-white text-sm font-medium rounded-2xl pl-11 pr-4 py-3 outline-none focus:ring-2 focus:ring-indigo-400/50 focus:bg-indigo-500/90! transition-all placeholder:text-white/40 shadow-lg shadow-black/10" />
                       <div
                         class="absolute inset-y-0 left-0 flex items-center pl-4 text-white/50 group-focus-within:text-white/80 transition-colors">
                         <i class="fa-solid fa-magnifying-glass text-xs"></i>
@@ -84,26 +84,27 @@
           <% for(let listing of listings) { %>
             <a href="/listings/<%= listing._id %>" class="group block no-underline focus:outline-none">
               <div
-                class="relative overflow-hidden rounded-2xl border border-indigo-100/50 bg-gray-300/90 p-3 shadow-sm ring-1 ring-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-500/15 hover:ring-indigo-300 hover:bg-gray-100/90">
+                class="relative overflow-hidden rounded-2xl border border-indigo-100/50 bg-gray-300/90 p-3 shadow-sm ring-1 ring-slate-900/5 transition-all duration-300 hover:shadow-xl hover:shadow-indigo-500/15 hover:ring-indigo-300 hover:brightness-70">
 
 
                 <!-- Image -->
                 <div class="relative h-80 w-full overflow-hidden rounded-xl bg-slate-50">
                   <img src="<%= listing.image %>" alt="<%= listing.title %>"
-                    class="h-full w-full object-cover object-top transition duration-500 group-hover:scale-105" />
+                    class="h-full w-full object-cover object-top transition duration-500" />
                 </div>
 
                 <!-- Content -->
                 <div class="pt-4 pb-2 px-1 flex justify-between items-start gap-3">
                   <div class="min-w-0 flex-1">
                     <!-- Brand / Category (Green Text) -->
-                    <p class="text-[11px] font-bold uppercase tracking-widest text-emerald-500 mb-1">
-                      <%= listing.brand || 'PREMIUM' %>
+                    <p class="  text-slate-700 font-bold uppercase tracking-widest mb-1">
+                      <%= listing.title %>
+
                     </p>
 
                     <!-- Title -->
-                    <h3 class="text-[10px]! font-bold text-slate-900 mb-1 line-clamp-2 leading-tight min-h-10">
-                      <%= listing.title %>
+                    <h3 class="text-[10px]! text-slate-700! font-bold mb-1 line-clamp-2 leading-tight min-h-10">
+                      <%= listing.brand || 'PREMIUM' %>
                     </h3>
 
                     <!-- Badges -->
@@ -148,7 +149,7 @@
               <!-- Previous Arrow -->
               <% if (currentPage> 1) { %>
                 <a href="/listings?page=<%= currentPage - 1 %><%= q ? `&q=${q}` : '' %><%= sort ? `&sort=${sort}` : '' %><%= category ? `&category=${category}` : '' %>"
-                  class="group flex h-11 w-11 items-center justify-center rounded-full border border-white/40 bg-white/20 backdrop-blur-md text-white transition-all duration-300 hover:scale-110 hover:bg-white/40 hover:border-white/60 no-underline shadow-lg shadow-black/5">
+                  class="group flex h-11 w-11 items-center justify-center rounded-full border border-white/40 bg-white/20 backdrop-blur-md text-white transition-all duration-300 hover:brightness-75 hover:border-white/60 no-underline shadow-lg shadow-black/5">
                   <i class="fa-solid fa-chevron-left text-[11px] transition-transform group-hover:-translate-x-0.5"></i>
                 </a>
                 <% } else { %>
@@ -170,7 +171,7 @@
                           </div>
                           <% } else { %>
                             <a href="/listings?page=<%= i %><%= q ? `&q=${q}` : '' %><%= sort ? `&sort=${sort}` : '' %><%= category ? `&category=${category}` : '' %>"
-                              class="flex h-11 w-11 items-center justify-center rounded-full border border-white/40 bg-white/20 backdrop-blur-md text-sm font-bold text-white transition-all duration-300 hover:scale-110 hover:bg-white/40 hover:border-white/60 no-underline shadow-lg shadow-black/5">
+                              class="flex h-11 w-11 items-center justify-center rounded-full border border-white/40 bg-white/20 backdrop-blur-md text-sm font-bold text-white transition-all duration-300 hover:brightness-75 hover:border-white/60 no-underline shadow-lg shadow-black/5">
                               <%= i %>
                             </a>
                             <% } %>
@@ -179,7 +180,7 @@
                                 <!-- Next Arrow -->
                                 <% if (currentPage < totalPages) { %>
                                   <a href="/listings?page=<%= currentPage + 1 %><%= q ? `&q=${q}` : '' %><%= sort ? `&sort=${sort}` : '' %><%= category ? `&category=${category}` : '' %>"
-                                    class="group flex h-11 w-11 items-center justify-center rounded-full border border-white/40 bg-white/20 backdrop-blur-md text-white transition-all duration-300 hover:scale-110 hover:bg-white/40 hover:border-white/60 no-underline shadow-lg shadow-black/5">
+                                    class="group flex h-11 w-11 items-center justify-center rounded-full border border-white/40 bg-white/20 backdrop-blur-md text-white transition-all duration-300 hover:brightness-75 hover:border-white/60 no-underline shadow-lg shadow-black/5">
                                     <i
                                       class="fa-solid fa-chevron-right text-[11px] transition-transform group-hover:translate-x-0.5"></i>
                                   </a>

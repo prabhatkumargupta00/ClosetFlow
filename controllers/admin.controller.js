@@ -73,9 +73,11 @@ module.exports.completeRental = async (req, res, next) => {
         rental.status = "completed";
         await rental.save();
 
-        // Set listing available again
-        rental.listing.rentalStatus = "available";
-        await rental.listing.save();
+        // Set listing available again (only if it still exists)
+        if (rental.listing) {
+            rental.listing.rentalStatus = "available";
+            await rental.listing.save();
+        }
 
         res.redirect("/admin/rentals");
     } catch (err) {
