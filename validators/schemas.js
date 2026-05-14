@@ -23,17 +23,18 @@ const listingSchema = Joi.object({
         color: Joi.string().trim().max(30).allow("", null),
 
         category: Joi.string()
-            .valid("Lehenga", "Kurta Pajama", "Sherwani", "Anarkali", "Suit", "Bandhgala")
+            .valid("Lehenga", "Kurta Pajama", "Sherwani", "Anarkali", "Suit", "Bandhgala", "None")
             .allow("", null),
 
         occasion: Joi.string()
-            .valid("Wedding", "Reception", "Festive", "Corporate", "Formal")
+            .valid("Wedding", "Reception", "Festive", "Corporate", "Formal", "None")
             .allow("", null),
 
         size: Joi.array()
             .items(Joi.string().valid("S", "M", "L", "XL"))
             .min(1)
             .required()
+            .single()
             .messages({ "array.min": "At least one size must be selected" }),
 
         fitType: Joi.string()
@@ -59,9 +60,9 @@ const registerSchema = Joi.object({
     email: Joi.string().trim().lowercase().email().required()
         .messages({ "string.email": "Please enter a valid email address" }),
 
-    password: Joi.string().min(8).max(50).required()
+    password: Joi.string().min(6).max(50).required()
         .messages({
-            "string.min": "Password must be at least 8 characters",
+            "string.min": "Password must be at least 6 characters",
             "string.max": "Password cannot exceed 50 characters",
         }),
 });
@@ -91,7 +92,7 @@ const rentalSchema = Joi.object({
         }),
 
     size: Joi.string().required()
-        .messages({"any.required": "Size selection is required"}),
+        .messages({ "any.required": "Size selection is required" }),
 });
 
 // ─── Reusable validate middleware factory ─────────────────────────
